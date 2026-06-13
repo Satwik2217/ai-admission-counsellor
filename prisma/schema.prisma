@@ -1,0 +1,249 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  OWNER
+  STAFF
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  PAST_DUE
+  CANCELLED
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  logo      String?
+  phone     String?
+  email     String?
+  website   String?
+  address   String?
+  openingTime String?
+  closingTime String?
+  admissionProcess String?
+  documentsRequired String?
+  greetingMessage String?
+  onboardingComplete Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships    Membership[]
+  subscriptions  Subscription[]
+  courses        Course[]
+  faqs           FAQ[]
+  knowledgeBases KnowledgeBase[]
+  embeddings     Embedding[]
+  conversations  Conversation[]
+  leads          Lead[]
+}
+
+model User {
+  id        String   @id
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships Membership[]
+  leadNotes   LeadNote[]
+}
+
+model Membership {
+  id             String   @id @default(cuid())
+  organizationId String
+  userId         String
+  role           Role     @default(STAFF)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@index([organizationId])
+}
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  organizationId       String             @unique
+  status               SubscriptionStatus @default(INACTIVE)
+  plan                 String             @default("free")
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model Course {
+  id             String   @id @default(cuid())
+  organizationId String
+  name           String
+  description    String?
+  duration       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  fees         Fee[]
+
+  @@index([organizationId])
+}
+
+model Fee {
+  id       String @id @default(cuid())
+  courseId String
+  amount   Int
+  discount Int    @default(0)
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+}
+
+model FAQ {
+  id             String   @id @default(cuid())
+  organizationId String
+  question       String
+  answer         String
+  category       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([organizationId, category])
+}
+
+model KnowledgeBase {
+  id             String   @id @default(cuid())
+  organizationId String
+  title          String
+  content        String
+  category       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([organizationId, category])
+}
+
+model Embedding {
+  id             String   @id @default(cuid())
+  organizationId String
+  sourceType     String
+  sourceId       String
+  content        String
+  vector         String
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceType, sourceId])
+  @@index([organizationId])
+}
+
+model Lead {
+  id               String   @id @default(cuid())
+  organizationId   String
+  name             String
+  phone            String?
+  email            String?
+  interestedCourse String?
+  source           String   @default("direct")
+  status           String   @default("new")
+  score            Int      @default(0)
+  category         String   @default("cold")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  notes        LeadNote[]
+  activities   LeadActivity[]
+
+  @@index([organizationId])
+  @@index([organizationId, status])
+  @@index([organizationId, score])
+  @@index([organizationId, name])
+}
+
+model LeadNote {
+  id        String   @id @default(cuid())
+  leadId    String
+  content   String
+  authorId  String
+  createdAt DateTime @default(now())
+
+  lead   Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id])
+
+  @@index([leadId])
+}
+
+model LeadActivity {
+  id          String   @id @default(cuid())
+  leadId      String
+  type        String
+  description String
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([leadId])
+  @@index([leadId, type])
+}
+
+model Conversation {
+  id             String   @id @default(cuid())
+  organizationId String
+  studentName    String?
+  parentName     String?
+  phone          String?
+  email          String?
+  classField     String?  @map("class")
+  targetExam     String?
+  language       String   @default("english")
+  status         String   @default("active")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  messages     Message[]
+
+  @@index([organizationId])
+  @@index([organizationId, status])
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  role           String
+  content        String
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@index([conversationId, createdAt])
+}
