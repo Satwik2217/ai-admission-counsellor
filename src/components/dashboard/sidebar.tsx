@@ -17,6 +17,7 @@ import {
   BookOpen,
   Contact,
   CalendarDays,
+  Shield,
 } from "lucide-react";
 
 const navigation = [
@@ -30,6 +31,7 @@ const navigation = [
   { name: "FAQs", href: "/dashboard/faqs", icon: HelpCircle },
   { name: "Knowledge Base", href: "/dashboard/knowledge-base", icon: BookOpen },
   { name: "Team", href: "/dashboard/members", icon: Users },
+  { name: "Admin", href: "/dashboard/admin", icon: Shield },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
