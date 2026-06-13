@@ -16,11 +16,13 @@ import {
   HelpCircle,
   BookOpen,
   Contact,
+  CalendarDays,
 } from "lucide-react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Leads", href: "/dashboard/leads", icon: Contact },
+  { name: "Appointments", href: "/dashboard/appointments", icon: CalendarDays },
   { name: "Students", href: "/dashboard/students", icon: GraduationCap },
   { name: "Applications", href: "/dashboard/applications", icon: FileText },
   { name: "AI Counselor", href: "/dashboard/counselor", icon: Bot },

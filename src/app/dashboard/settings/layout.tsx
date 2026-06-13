@@ -2,10 +2,12 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Settings, CreditCard, Users } from "lucide-react";
+import { Settings, CreditCard, Users, CalendarDays, Code } from "lucide-react";
 
 const settingsNav = [
   { name: "General", href: "/dashboard/settings/general", icon: Settings },
+  { name: "Appointments", href: "/dashboard/settings/appointments", icon: CalendarDays },
+  { name: "Widget", href: "/dashboard/settings/widget", icon: Code },
   { name: "Members", href: "/dashboard/settings/members", icon: Users },
   { name: "Billing", href: "/dashboard/settings/billing", icon: CreditCard },
 ];

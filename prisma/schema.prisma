@@ -35,6 +35,11 @@ model Organization {
   documentsRequired String?
   greetingMessage String?
   onboardingComplete Boolean @default(false)
+  workingDays       String?  @default("[1,2,3,4,5,6]")
+  maxBookingsPerSlot Int     @default(1)
+  appointmentDuration Int    @default(60)
+  widgetPrimaryColor String? @default("#7C3AED")
+  widgetDarkMode    Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -46,6 +51,7 @@ model Organization {
   embeddings     Embedding[]
   conversations  Conversation[]
   leads          Lead[]
+  appointments   Appointment[]
 }
 
 model User {
@@ -180,6 +186,7 @@ model Lead {
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   notes        LeadNote[]
   activities   LeadActivity[]
+  appointments Appointment[]
 
   @@index([organizationId])
   @@index([organizationId, status])
@@ -212,6 +219,30 @@ model LeadActivity {
 
   @@index([leadId])
   @@index([leadId, type])
+}
+
+model Appointment {
+  id             String   @id @default(cuid())
+  organizationId String
+  leadId         String?
+  leadName       String
+  leadPhone      String?
+  leadEmail      String?
+  date           DateTime
+  time           String
+  status         String   @default("pending")
+  notes          String?
+  cancelledAt    DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  lead         Lead?        @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([organizationId, date])
+  @@index([organizationId, status])
+  @@index([organizationId, date, time])
 }
 
 model Conversation {
