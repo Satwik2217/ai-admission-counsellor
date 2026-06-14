@@ -83,7 +83,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
-    const score = calculateLeadScore({ phone, email, activityTypes: [] });
+    const score = calculateLeadScore({ phone, email, activityTypes: [], source });
     const category = getCategory(score);
 
     const lead = await prisma.lead.create({

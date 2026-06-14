@@ -32,7 +32,7 @@ const navigation = [
   { name: "Follow-ups", href: "/dashboard/follow-ups", icon: Clock },
   { name: "Students", href: "/dashboard/students", icon: GraduationCap },
   { name: "Applications", href: "/dashboard/applications", icon: FileText },
-  { name: "AI Counselor", href: "/dashboard/counselor", icon: Bot },
+  { name: "AI Copilot", href: "/dashboard/copilot", icon: Bot },
   { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
   { name: "FAQs", href: "/dashboard/faqs", icon: HelpCircle },
   { name: "Knowledge Base", href: "/dashboard/knowledge-base", icon: BookOpen },

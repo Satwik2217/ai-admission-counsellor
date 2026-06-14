@@ -5,6 +5,7 @@ interface LeadCategoryBadgeProps {
 }
 
 const categoryConfig: Record<string, { label: string; color: string }> = {
+  vip: { label: "VIP", color: "bg-purple-100 text-purple-800 border-purple-200" },
   hot: { label: "Hot", color: "bg-red-100 text-red-800 border-red-200" },
   warm: { label: "Warm", color: "bg-orange-100 text-orange-800 border-orange-200" },
   cold: { label: "Cold", color: "bg-blue-100 text-blue-800 border-blue-200" },

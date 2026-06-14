@@ -79,11 +79,13 @@ export default function LeadsPage() {
     }
   }
 
+  const [vipCount, setVipCount] = useState(0);
   const [hotCount, setHotCount] = useState(0);
   const [warmCount, setWarmCount] = useState(0);
   const [coldCount, setColdCount] = useState(0);
 
   useEffect(() => {
+    setVipCount(leads.filter((l) => l.category === "vip").length);
     setHotCount(leads.filter((l) => l.category === "hot").length);
     setWarmCount(leads.filter((l) => l.category === "warm").length);
     setColdCount(leads.filter((l) => l.category === "cold").length);
@@ -111,20 +113,27 @@ export default function LeadsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-4 gap-4">
+        <div className="rounded-lg border bg-card p-4">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-purple-600">VIP Leads</span>
+            <span className="text-2xl font-bold">{vipCount}</span>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground">Score 80+</p>
+        </div>
         <div className="rounded-lg border bg-card p-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-red-600">Hot Leads</span>
             <span className="text-2xl font-bold">{hotCount}</span>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">Score 60+</p>
+          <p className="mt-1 text-xs text-muted-foreground">Score 50-79</p>
         </div>
         <div className="rounded-lg border bg-card p-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-orange-600">Warm Leads</span>
             <span className="text-2xl font-bold">{warmCount}</span>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">Score 20-59</p>
+          <p className="mt-1 text-xs text-muted-foreground">Score 20-49</p>
         </div>
         <div className="rounded-lg border bg-card p-4">
           <div className="flex items-center justify-between">

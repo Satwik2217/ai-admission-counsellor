@@ -63,16 +63,17 @@ export function LeadFilters({
           ))}
         </select>
 
-        <select
-          value={categoryFilter}
-          onChange={(e) => onCategoryFilterChange(e.target.value)}
-          className="h-9 rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-        >
-          <option value="">All Categories</option>
-          <option value="hot">Hot</option>
-          <option value="warm">Warm</option>
-          <option value="cold">Cold</option>
-        </select>
+          <select
+            value={categoryFilter}
+            onChange={(e) => onCategoryFilterChange(e.target.value)}
+            className="h-9 rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            <option value="">All Categories</option>
+            <option value="vip">VIP</option>
+            <option value="hot">Hot</option>
+            <option value="warm">Warm</option>
+            <option value="cold">Cold</option>
+          </select>
 
         {hasFilters && (
           <Button

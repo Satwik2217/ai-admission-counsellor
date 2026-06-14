@@ -18,16 +18,32 @@ export const LEAD_SOURCES = [
   { value: "other", label: "Other" },
 ] as const;
 
-export const SCORING_RULES = {
+export const SCORING_RULES_V2 = {
   PHONE_PROVIDED: 20,
   EMAIL_PROVIDED: 10,
-  ASKED_ABOUT_FEES: 20,
-  ASKED_ABOUT_ADMISSIONS: 30,
+  FIRST_FEES_QUESTION: 20,
+  REPEAT_FEES_QUESTION: 10,
+  FIRST_ADMISSIONS_QUESTION: 30,
+  REPEAT_ADMISSIONS_QUESTION: 15,
   BOOKED_APPOINTMENT: 30,
+  RECENCY_24H: 15,
+  RECENCY_7D: 10,
+  RECENCY_30D: 5,
 } as const;
 
+export const SOURCE_BOOSTS: Record<string, number> = {
+  referral: 10,
+  walk_in: 10,
+  phone_inquiry: 5,
+  whatsapp: 5,
+  chat: 3,
+  website: 2,
+  social_media: 2,
+};
+
 export const CATEGORY_THRESHOLDS = {
-  HOT: 60,
+  VIP: 80,
+  HOT: 50,
   WARM: 20,
 } as const;
 

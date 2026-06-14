@@ -78,7 +78,16 @@ export async function PATCH(
     const newStatus = updateData.status !== undefined ? updateData.status as string : existing.status;
 
     const activityTypes = existing.activities.map((a) => a.type);
-    const score = calculateLeadScore({ phone: newPhone, email: newEmail, activityTypes });
+    const lastActivity = existing.activities.sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    )[0]?.createdAt;
+    const score = calculateLeadScore({
+      phone: newPhone,
+      email: newEmail,
+      activityTypes,
+      source: updateData.source as string | undefined ?? existing.source,
+      lastActivityAt: lastActivity ?? existing.updatedAt,
+    });
     const category = getCategory(score);
 
     updateData.score = score;
