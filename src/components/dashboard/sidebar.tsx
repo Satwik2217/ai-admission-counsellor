@@ -18,12 +18,18 @@ import {
   Contact,
   CalendarDays,
   Shield,
+  MessageSquare,
+  Clock,
+  TrendingUp,
 } from "lucide-react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Inbox", href: "/dashboard/inbox", icon: MessageSquare },
   { name: "Leads", href: "/dashboard/leads", icon: Contact },
+  { name: "Funnel", href: "/dashboard/funnel", icon: TrendingUp },
   { name: "Appointments", href: "/dashboard/appointments", icon: CalendarDays },
+  { name: "Follow-ups", href: "/dashboard/follow-ups", icon: Clock },
   { name: "Students", href: "/dashboard/students", icon: GraduationCap },
   { name: "Applications", href: "/dashboard/applications", icon: FileText },
   { name: "AI Counselor", href: "/dashboard/counselor", icon: Bot },

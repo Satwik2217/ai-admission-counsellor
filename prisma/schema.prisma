@@ -7,6 +7,11 @@ datasource db {
   provider = "postgresql"
 }
 
+enum ChannelType {
+  WEBSITE
+  WHATSAPP
+}
+
 enum Role {
   SUPER_ADMIN
   OWNER
@@ -40,6 +45,9 @@ model Organization {
   appointmentDuration Int    @default(60)
   widgetPrimaryColor String? @default("#7C3AED")
   widgetDarkMode    Boolean  @default(false)
+  whatsappPhoneNumberId String?
+  whatsappBusinessAccountId String?
+  whatsappApiToken    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -52,6 +60,8 @@ model Organization {
   conversations  Conversation[]
   leads          Lead[]
   appointments   Appointment[]
+  followUpRules  FollowUpRule[]
+  followUpLogs   FollowUpLog[]
 }
 
 model User {
@@ -63,8 +73,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  memberships Membership[]
-  leadNotes   LeadNote[]
+  memberships          Membership[]
+  leadNotes            LeadNote[]
+  assignedConversations Conversation[] @relation("AssignedConversations")
 }
 
 model Membership {
@@ -84,16 +95,16 @@ model Membership {
 }
 
 model Subscription {
-  id                   String             @id @default(cuid())
-  organizationId       String             @unique
-  status               SubscriptionStatus @default(INACTIVE)
-  plan                 String             @default("free")
-  stripeCustomerId     String?
-  stripeSubscriptionId String?
-  currentPeriodStart   DateTime?
-  currentPeriodEnd     DateTime?
-  createdAt            DateTime           @default(now())
-  updatedAt            DateTime           @updatedAt
+  id                     String             @id @default(cuid())
+  organizationId         String             @unique
+  status                 SubscriptionStatus @default(INACTIVE)
+  plan                   String             @default("free")
+  razorpayCustomerId     String?
+  razorpaySubscriptionId String?
+  currentPeriodStart     DateTime?
+  currentPeriodEnd       DateTime?
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 }
@@ -245,25 +256,74 @@ model Appointment {
   @@index([organizationId, date, time])
 }
 
-model Conversation {
+model FollowUpRule {
   id             String   @id @default(cuid())
   organizationId String
+  name           String
+  trigger        String   // "no_response", "lead_not_converted"
+  delayHours     Int
+  channel        String   @default("WHATSAPP")
+  template       String
+  enabled        Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization  Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  followUpLogs  FollowUpLog[]
+
+  @@index([organizationId])
+  @@index([organizationId, enabled])
+}
+
+model FollowUpLog {
+  id             String       @id @default(cuid())
+  organizationId String
+  conversationId String
+  ruleId         String
+  scheduledAt    DateTime
+  sentAt         DateTime?
+  status         String       // "scheduled", "sent", "failed", "cancelled"
+  error          String?
+  createdAt      DateTime     @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  rule         FollowUpRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([organizationId, status])
+  @@index([scheduledAt])
+}
+
+model Conversation {
+  id             String      @id @default(cuid())
+  organizationId String
+  channel        ChannelType @default(WEBSITE)
+  channelId      String?
   studentName    String?
   parentName     String?
   phone          String?
   email          String?
-  classField     String?  @map("class")
+  classField     String?     @map("class")
   targetExam     String?
-  language       String   @default("english")
-  status         String   @default("active")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  language       String      @default("english")
+  status         String      @default("active")
+  mode           String      @default("auto")
+  assignedToId   String?
+  assignedAt     DateTime?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   messages     Message[]
+  assignedTo   User?        @relation("AssignedConversations", fields: [assignedToId], references: [id])
+  followUpLogs FollowUpLog[]
 
   @@index([organizationId])
+  @@index([organizationId, channel])
   @@index([organizationId, status])
+  @@index([organizationId, channel, status])
+  @@index([assignedToId])
 }
 
 model Message {
@@ -271,10 +331,12 @@ model Message {
   conversationId String
   role           String
   content        String
+  channel        ChannelType @default(WEBSITE)
   createdAt      DateTime @default(now())
 
   conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
 
   @@index([conversationId])
+  @@index([conversationId, channel])
   @@index([conversationId, createdAt])
 }

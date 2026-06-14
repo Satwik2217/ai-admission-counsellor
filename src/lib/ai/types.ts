@@ -19,6 +19,7 @@ export interface ChatParams {
 export interface AIProvider {
   name: string;
   streamChat(params: ChatParams): ReadableStream<string>;
+  extractLeadInfo(text: string): Promise<LeadInfo>;
 }
 
 export interface LeadInfo {

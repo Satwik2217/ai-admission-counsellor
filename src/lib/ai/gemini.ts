@@ -1,5 +1,5 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import type { AIProvider, AIConfig, ChatParams, ChatMessage } from "./types";
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import type { AIProvider, AIConfig, ChatParams, LeadInfo } from "./types";
 
 export class GeminiProvider implements AIProvider {
   name = "gemini";
@@ -55,5 +55,79 @@ export class GeminiProvider implements AIProvider {
         }
       },
     });
+  }
+
+  async extractLeadInfo(text: string): Promise<LeadInfo> {
+    try {
+      const model = this.client.getGenerativeModel({
+        model: this.model,
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: SchemaType.OBJECT,
+            properties: {
+              studentName: {
+                type: SchemaType.STRING,
+                description: "Full name of the student if mentioned",
+                nullable: true,
+              },
+              parentName: {
+                type: SchemaType.STRING,
+                description: "Full name of the parent/guardian if mentioned",
+                nullable: true,
+              },
+              phone: {
+                type: SchemaType.STRING,
+                description: "Phone/contact number if mentioned (with country code if available)",
+                nullable: true,
+              },
+              email: {
+                type: SchemaType.STRING,
+                description: "Email address if mentioned",
+                nullable: true,
+              },
+              classField: {
+                type: SchemaType.STRING,
+                description: "Current class, grade, or standard the student is studying in (e.g., '11th', '12th', '10th', 'dropper', 'repeater')",
+                nullable: true,
+              },
+              targetExam: {
+                type: SchemaType.STRING,
+                description: "Target exam the student is preparing for (e.g., 'JEE', 'NEET', 'CUET', 'GATE', 'UPSC', 'SSC', 'CAT')",
+                nullable: true,
+              },
+            },
+            required: [],
+          },
+        },
+        systemInstruction: `You are a lead information extractor. Your job is to analyze a conversation between a student/parent and an admission counselor, and extract any student information mentioned.
+
+Extract ONLY information that is explicitly mentioned. Do not guess or infer. If a field is not mentioned, leave it null.
+
+Handle Indian names, Hinglish inputs, and various ways people share their details:
+- "mera naam Rahul hai" → studentName: "Rahul"
+- "class 11th" → classField: "11th"
+- "dropper hu" → classField: "dropper"
+- "JEE ki taiyari kar raha hu" → targetExam: "JEE"
+- "mummy ka naam Priya hai" → parentName: "Priya"
+- "phone number 9876543210" → phone: "9876543210"`,
+      });
+
+      const result = await model.generateContent(text);
+      const response = result.response;
+      const jsonText = response.text();
+
+      const parsed = JSON.parse(jsonText) as LeadInfo;
+      return {
+        studentName: parsed.studentName || undefined,
+        parentName: parsed.parentName || undefined,
+        phone: parsed.phone || undefined,
+        email: parsed.email || undefined,
+        classField: parsed.classField || undefined,
+        targetExam: parsed.targetExam || undefined,
+      };
+    } catch {
+      return {};
+    }
   }
 }

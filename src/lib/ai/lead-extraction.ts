@@ -1,4 +1,5 @@
 import type { LeadInfo } from "./types";
+import { getAIProvider } from "./provider";
 
 const patterns: Record<keyof Required<LeadInfo>, RegExp[]> = {
   studentName: [
@@ -26,7 +27,7 @@ const patterns: Record<keyof Required<LeadInfo>, RegExp[]> = {
   ],
 };
 
-export function extractLeadInfo(text: string): LeadInfo {
+function extractLeadInfoRegex(text: string): LeadInfo {
   const info: LeadInfo = {};
 
   for (const [field, regexps] of Object.entries(patterns)) {
@@ -57,6 +58,21 @@ export function extractLeadInfo(text: string): LeadInfo {
   }
 
   return info;
+}
+
+export async function extractLeadInfo(text: string): Promise<LeadInfo> {
+  const provider = getAIProvider();
+
+  try {
+    const aiResult = await provider.extractLeadInfo(text);
+    if (Object.values(aiResult).some((v) => v)) {
+      return aiResult;
+    }
+  } catch {
+    // fall through to regex
+  }
+
+  return extractLeadInfoRegex(text);
 }
 
 export function mergeLeadInfo(existing: LeadInfo, extracted: LeadInfo): LeadInfo {

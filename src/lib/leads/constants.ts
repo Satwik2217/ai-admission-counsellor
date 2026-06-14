@@ -13,6 +13,7 @@ export const LEAD_SOURCES = [
   { value: "social_media", label: "Social Media" },
   { value: "phone_inquiry", label: "Phone Inquiry" },
   { value: "chat", label: "Chat" },
+  { value: "whatsapp", label: "WhatsApp" },
   { value: "walk_in", label: "Walk-in" },
   { value: "other", label: "Other" },
 ] as const;

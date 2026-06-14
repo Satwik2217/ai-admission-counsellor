@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { cosineSimilarity, getEmbeddingProvider } from "./provider";
+import { getEmbeddingProvider } from "./provider";
 import {
   FALLBACK_RESPONSE,
   SIMILARITY_THRESHOLD,
@@ -19,15 +19,78 @@ export interface RetrievalResult {
   found: boolean;
 }
 
-export async function searchSimilar(
+async function pgVectorSearch(
   organizationId: string,
-  query: string,
-  limit: number = 5
+  queryVector: number[],
+  limit: number
 ): Promise<SearchResult[]> {
-  const provider = getEmbeddingProvider();
-  const queryVector = await provider.generateEmbedding(query);
+  const queryVectorStr = JSON.stringify(queryVector);
 
-  if (queryVector.length === 0) return [];
+  const rows: Array<{
+    id: string;
+    sourceType: string;
+    sourceId: string;
+    content: string;
+    similarity: number;
+  }> = await prisma.$queryRaw`
+    SELECT
+      id,
+      "sourceType",
+      "sourceId",
+      content,
+      1 - (vector::vector <=> ${queryVectorStr}::vector) as similarity
+    FROM "Embedding"
+    WHERE "organizationId" = ${organizationId}
+      AND 1 - (vector::vector <=> ${queryVectorStr}::vector) >= ${SIMILARITY_THRESHOLD}
+    ORDER BY similarity DESC
+    LIMIT ${limit}
+  `;
+
+  const results: SearchResult[] = [];
+
+  for (const row of rows) {
+    const sourceType = row.sourceType as "FAQ" | "KB";
+
+    if (sourceType === "FAQ") {
+      const faq = await prisma.fAQ.findUnique({
+        where: { id: row.sourceId },
+        select: { category: true, question: true },
+      });
+      results.push({
+        id: row.id,
+        sourceType,
+        sourceId: row.sourceId,
+        content: row.content,
+        title: faq?.question || undefined,
+        category: faq?.category || "",
+        score: Number(row.similarity),
+      });
+    } else {
+      const kb = await prisma.knowledgeBase.findUnique({
+        where: { id: row.sourceId },
+        select: { category: true, title: true },
+      });
+      results.push({
+        id: row.id,
+        sourceType,
+        sourceId: row.sourceId,
+        content: row.content,
+        title: kb?.title || undefined,
+        category: kb?.category || "",
+        score: Number(row.similarity),
+      });
+    }
+  }
+
+  return results;
+}
+
+async function inMemorySearch(
+  organizationId: string,
+  queryVector: number[],
+  limit: number
+): Promise<SearchResult[]> {
+  const { cosineSimilarity } = await import("./provider");
 
   const embeddings = await prisma.embedding.findMany({
     where: { organizationId },
@@ -75,6 +138,23 @@ export async function searchSimilar(
   }
 
   return results;
+}
+
+export async function searchSimilar(
+  organizationId: string,
+  query: string,
+  limit: number = 5
+): Promise<SearchResult[]> {
+  const provider = getEmbeddingProvider();
+  const queryVector = await provider.generateEmbedding(query);
+
+  if (queryVector.length === 0) return [];
+
+  try {
+    return await pgVectorSearch(organizationId, queryVector, limit);
+  } catch {
+    return inMemorySearch(organizationId, queryVector, limit);
+  }
 }
 
 export async function retrieveContext(

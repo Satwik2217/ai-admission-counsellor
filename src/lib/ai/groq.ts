@@ -1,4 +1,4 @@
-import type { AIProvider, AIConfig, ChatParams } from "./types";
+import type { AIProvider, AIConfig, ChatParams, LeadInfo } from "./types";
 
 export class GroqProvider implements AIProvider {
   name = "groq";
@@ -96,5 +96,62 @@ export class GroqProvider implements AIProvider {
         }
       },
     });
+  }
+
+  async extractLeadInfo(text: string): Promise<LeadInfo> {
+    try {
+      const res = await fetch(
+        "https://api.groq.com/openai/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.apiKey}`,
+          },
+          body: JSON.stringify({
+            model: this.model,
+            messages: [
+              {
+                role: "system",
+                content: `You are a lead information extractor. Extract student information from the conversation and return ONLY valid JSON (no markdown, no code fences) with these optional fields: studentName, parentName, phone, email, classField, targetExam. Use null for missing fields.
+
+Handle Indian names, Hinglish inputs:
+- "mera naam Rahul hai" → studentName: "Rahul"
+- "class 11th" → classField: "11th"
+- "dropper hu" → classField: "dropper"
+- "JEE ki taiyari kar raha hu" → targetExam: "JEE"
+- "phone number 9876543210" → phone: "9876543210"`,
+              },
+              { role: "user", content: text },
+            ],
+            temperature: 0.1,
+            max_tokens: 256,
+          }),
+        }
+      );
+
+      if (!res.ok) return {};
+
+      const json = await res.json();
+      const content = json.choices?.[0]?.message?.content;
+      if (!content) return {};
+
+      const sanitized = content
+        .replace(/```json\s*/gi, "")
+        .replace(/```\s*$/g, "")
+        .trim();
+
+      const parsed = JSON.parse(sanitized) as LeadInfo;
+      return {
+        studentName: parsed.studentName || undefined,
+        parentName: parsed.parentName || undefined,
+        phone: parsed.phone || undefined,
+        email: parsed.email || undefined,
+        classField: parsed.classField || undefined,
+        targetExam: parsed.targetExam || undefined,
+      };
+    } catch {
+      return {};
+    }
   }
 }
