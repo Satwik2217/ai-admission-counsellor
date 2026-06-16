@@ -16,12 +16,12 @@ export default function LandingPage() {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/sign-in">
-              <Button variant="ghost">Sign In</Button>
-            </Link>
-            <Link href="/sign-up">
-              <Button>Get Started</Button>
-            </Link>
+            <Button variant="ghost" asChild>
+              <Link href="/sign-in">Sign In</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/sign-up">Get Started</Link>
+            </Button>
           </div>
         </div>
       </header>
@@ -37,16 +37,14 @@ export default function LandingPage() {
               Guide students, manage applications, and boost conversions — all in one platform.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link href="/sign-up">
-                <Button size="lg" className="gap-2">
+              <Button size="lg" className="gap-2" asChild>
+                <Link href="/sign-up">
                   Start Free Trial <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="/sign-in">
-                <Button variant="outline" size="lg">
-                  Watch Demo
-                </Button>
-              </Link>
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <Link href="/sign-in">Watch Demo</Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -94,11 +92,11 @@ export default function LandingPage() {
               Join thousands of institutes using AI Admission Counselor.
             </p>
             <div className="mt-8">
-              <Link href="/sign-up">
-                <Button size="lg" className="gap-2">
+              <Button size="lg" className="gap-2" asChild>
+                <Link href="/sign-up">
                   Get Started Free <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
         </section>

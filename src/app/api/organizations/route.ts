@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
@@ -26,6 +26,44 @@ export async function POST(req: Request) {
       );
     }
 
+    // Ensure the user exists in our local database before creating membership
+    let dbUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!dbUser) {
+      const clerkUser = await currentUser();
+      if (!clerkUser) {
+        return NextResponse.json(
+          { error: "Failed to sync user: Clerk user not found" },
+          { status: 404 }
+        );
+      }
+      const email = clerkUser.emailAddresses[0]?.emailAddress;
+      if (!email) {
+        return NextResponse.json(
+          { error: "Failed to sync user: Email is required" },
+          { status: 400 }
+        );
+      }
+      await prisma.user.upsert({
+        where: { id: userId },
+        update: {
+          email,
+          firstName: clerkUser.firstName,
+          lastName: clerkUser.lastName,
+          avatarUrl: clerkUser.imageUrl,
+        },
+        create: {
+          id: userId,
+          email,
+          firstName: clerkUser.firstName,
+          lastName: clerkUser.lastName,
+          avatarUrl: clerkUser.imageUrl,
+        },
+      });
+    }
+
     const existingOrg = await prisma.organization.findUnique({
       where: { slug },
     });
@@ -37,29 +75,31 @@ export async function POST(req: Request) {
       );
     }
 
-    const [organization] = await prisma.$transaction([
-      prisma.organization.create({
+    const organization = await prisma.$transaction(async (tx) => {
+      const org = await tx.organization.create({
         data: {
           name,
           slug,
         },
-      }),
-    ]);
+      });
 
-    await prisma.membership.create({
-      data: {
-        organizationId: organization.id,
-        userId,
-        role: "OWNER",
-      },
-    });
+      await tx.membership.create({
+        data: {
+          organizationId: org.id,
+          userId,
+          role: "OWNER",
+        },
+      });
 
-    await prisma.subscription.create({
-      data: {
-        organizationId: organization.id,
-        status: "INACTIVE",
-        plan: "free",
-      },
+      await tx.subscription.create({
+        data: {
+          organizationId: org.id,
+          status: "INACTIVE",
+          plan: "free",
+        },
+      });
+
+      return org;
     });
 
     return NextResponse.json(

@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Admission Counselor - Complete QA Testing Checklist</title>
+<style>
+  body {
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    color: #1a1a1a;
+    background: #fff;
+  }
+  h1 {
+    font-size: 22pt;
+    color: #0f172a;
+    border-bottom: 3px solid #3b82f6;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+  }
+  .subtitle {
+    color: #64748b;
+    font-size: 11pt;
+    margin-bottom: 30px;
+  }
+  h2 {
+    font-size: 16pt;
+    color: #1e3a5f;
+    background: #f0f7ff;
+    padding: 8px 12px;
+    border-left: 4px solid #3b82f6;
+    margin-top: 35px;
+    page-break-before: auto;
+  }
+  h3 {
+    font-size: 13pt;
+    color: #334155;
+    margin-top: 20px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #cbd5e1;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 20px 0;
+    font-size: 10.5pt;
+  }
+  th {
+    background: #1e3a5f;
+    color: white;
+    font-weight: 600;
+    text-align: left;
+    padding: 8px 10px;
+    border: 1px solid #1e3a5f;
+  }
+  td {
+    padding: 7px 10px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+  tr:hover td {
+    background: #f0f7ff;
+  }
+  .check-col { width: 40px; text-align: center; }
+  .id-col { width: 60px; text-align: center; }
+  .feature-col { width: 280px; }
+  .steps-col {  }
+  .expected-col { width: 280px; }
+  .status-col { width: 80px; text-align: center; }
+  .status-box {
+    display: inline-block;
+    width: 20px; height: 20px;
+    border: 2px solid #94a3b8;
+    border-radius: 3px;
+    background: white;
+  }
+  .note {
+    background: #fef9c3;
+    border: 1px solid #fde047;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 10pt;
+  }
+  .warn {
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 10pt;
+  }
+  .prereq {
+    background: #dcfce7;
+    border: 1px solid #86efac;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 10pt;
+  }
+  .section-icon { margin-right: 6px; }
+  .print-header {
+    display: none;
+  }
+  @media print {
+    body { margin: 0; padding: 15px; }
+    .no-print { display: none; }
+    thead { display: table-header-group; }
+    tr { page-break-inside: avoid; }
+    h2 { page-break-before: always; }
+  }
+  .toc a { color: #2563eb; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc li { margin: 4px 0; }
+  .pass { color: #16a34a; font-weight: bold; }
+  .fail { color: #dc2626; font-weight: bold; }
+  .summary-table td { text-align: center; font-weight: bold; font-size: 12pt; }
+</style>
+</head>
+<body>
+
+<h1>AI Admission Counselor — Complete QA Testing Checklist</h1>
+<p class="subtitle">
+  <strong>Version:</strong> 1.0 &nbsp;|&nbsp;
+  <strong>Last Updated:</strong> June 15, 2026 &nbsp;|&nbsp;
+  <strong>Tester:</strong> ___________________________ &nbsp;|&nbsp;
+  <strong>Date:</strong> ___________________________
+</p>
+
+<div class="note">
+  <strong>How to use this document:</strong> For each test case, perform the steps described and mark the result as <span class="pass">PASS</span> or <span class="fail">FAIL</span>. 
+  Record any bugs, observations, or screenshots in the Notes column. 
+  This document covers <strong>all features</strong> required for a sellable SaaS product.
+</div>
+
+<h2>Table of Contents</h2>
+<ol class="toc">
+  <li><a href="#s1">Authentication &amp; Authorization</a></li>
+  <li><a href="#s2">Landing Page &amp; Public Routes</a></li>
+  <li><a href="#s3">Dashboard</a></li>
+  <li><a href="#s4">Lead Management (CRM)</a></li>
+  <li><a href="#s5">Lead Funnel (Kanban)</a></li>
+  <li><a href="#s6">Unified Inbox / Chat</a></li>
+  <li><a href="#s7">AI Receptionist</a></li>
+  <li><a href="#s8">Appointment Scheduling</a></li>
+  <li><a href="#s9">Follow-up Automation</a></li>
+  <li><a href="#s10">Marketing Campaigns</a></li>
+  <li><a href="#s11">Knowledge Base &amp; FAQ Management</a></li>
+  <li><a href="#s12">Team &amp; Member Management</a></li>
+  <li><a href="#s13">Analytics &amp; Dashboard Stats</a></li>
+  <li><a href="#s14">Onboarding Wizard</a></li>
+  <li><a href="#s15">Organization Settings</a></li>
+  <li><a href="#s16">Billing &amp; Subscriptions (Razorpay)</a></li>
+  <li><a href="#s17">Embeddable Website Widget</a></li>
+  <li><a href="#s18">WhatsApp Business Integration</a></li>
+  <li><a href="#s19">AI Copilot (Internal Assistant)</a></li>
+  <li><a href="#s20">Super Admin Panel</a></li>
+  <li><a href="#s21">Multi-Tenant Data Isolation</a></li>
+  <li><a href="#s22">Error Handling &amp; Edge Cases</a></li>
+  <li><a href="#s23">Responsive Design &amp; Mobile</a></li>
+  <li><a href="#s24">Performance &amp; Load</a></li>
+  <li><a href="#s25">Security &amp; Compliance</a></li>
+  <li><a href="#summary">Test Summary</a></li>
+</ol>
+
+<div class="note no-print">
+  <strong>Tip:</strong> Print this document or open in Word. Use the checkboxes to mark PASS/FAIL. 
+  Keep a separate bug log for any FAIL items.
+</div>
+
+<!-- ===================================================================================== -->
+<h2 id="s1">1. Authentication &amp; Authorization</h2>
+
+<div class="prereq">
+  <strong>Prerequisites:</strong> Clerk instance configured with Email/Password and Google OAuth sign-up methods. 
+  At least two test accounts: one OWNER and one STAFF.
+</div>
+
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-01</td>
+    <td><strong>Sign Up — Email &amp; Password</strong></td>
+    <td>1. Go to /sign-up<br>2. Enter name, email, password<br>3. Click "Create Account"<br>4. Verify email via link/code</td>
+    <td>Account created. Redirected to dashboard or onboarding. Clerk session active.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-02</td>
+    <td><strong>Sign Up — Google OAuth</strong></td>
+    <td>1. Go to /sign-up<br>2. Click "Continue with Google"<br>3. Select Google account</td>
+    <td>Account created instantly (no email verification). Redirected to dashboard/onboarding.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-03</td>
+    <td><strong>Sign In — Email &amp; Password</strong></td>
+    <td>1. Go to /sign-in<br>2. Enter email + password<br>3. Click "Sign In"</td>
+    <td>Logged in. Redirected to /dashboard.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-04</td>
+    <td><strong>Sign In — Google OAuth</strong></td>
+    <td>1. Go to /sign-in<br>2. Click "Continue with Google"</td>
+    <td>Logged in. Redirected to /dashboard.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-05</td>
+    <td><strong>Sign Out</strong></td>
+    <td>1. Click UserButton (top-right)<br>2. Click "Sign Out"</td>
+    <td>Signed out. Redirected to /sign-in.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-06</td>
+    <td><strong>Forgot Password</strong></td>
+    <td>1. Go to /sign-in<br>2. Click "Forgot Password?"<br>3. Enter email<br>4. Check email for reset link</td>
+    <td>Password reset email sent. User can set new password and sign in.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-07</td>
+    <td><strong>Protected Route Redirect</strong></td>
+    <td>1. Sign out<br>2. Go to /dashboard directly</td>
+    <td>Redirected to /sign-in. After login, redirected back to /dashboard.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-08</td>
+    <td><strong>Public Routes Accessible</strong></td>
+    <td>1. Sign out<br>2. Visit /, /sign-in, /sign-up, /widget-test</td>
+    <td>All public pages load without redirect.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-09</td>
+    <td><strong>Session Persistence</strong></td>
+    <td>1. Sign in<br>2. Close browser tab<br>3. Open new tab → /dashboard</td>
+    <td>Session persists. User stays logged in.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AUTH-10</td>
+    <td><strong>Organization Switcher</strong></td>
+    <td>1. Sign in with account that has multiple orgs<br>2. Click OrganizationSwitcher in navbar<br>3. Switch organization</td>
+    <td>Switches org context. Data (leads, conversations, etc.) updates to the selected org.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s2">2. Landing Page &amp; Public Routes</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">LAND-01</td>
+    <td><strong>Landing Page Loads</strong></td>
+    <td>Visit /</td>
+    <td>Landing page renders with branding. No console errors.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LAND-02</td>
+    <td><strong>Landing Page CTA</strong></td>
+    <td>Click "Get Started" or "Sign Up" button on landing page</td>
+    <td>Redirected to /sign-up.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LAND-03</td>
+    <td><strong>Campaign Landing Page (Public)</strong></td>
+    <td>1. Create a campaign (from dashboard)<br>2. Open the campaign public URL in incognito</td>
+    <td>Campaign page renders with headline, CTA, and form fields. No auth required.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LAND-04</td>
+    <td><strong>Campaign Form Submission</strong></td>
+    <td>1. Open campaign landing page<br>2. Fill form (name, phone, email, course)<br>3. Submit</td>
+    <td>Success message shown. Lead created in the org's lead list. Submission count increments.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s3">3. Dashboard</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">DASH-01</td>
+    <td><strong>Dashboard Loads</strong></td>
+    <td>Go to /dashboard</td>
+    <td>Dashboard renders with sidebar + navbar + stats cards. No errors.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">DASH-02</td>
+    <td><strong>Stats Display Correctly</strong></td>
+    <td>Check dashboard cards: Total Leads, High Intent, Active Chats, Appointments, Conversion Rate</td>
+    <td>Numbers match actual data in the database. Conversion rate = (Converted / total) &times; 100.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">DASH-03</td>
+    <td><strong>Recent Leads List</strong></td>
+    <td>Scroll to "Recent Leads" section</td>
+    <td>Shows last 5 leads with name, phone, status, source, score.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">DASH-04</td>
+    <td><strong>Recent Conversations</strong></td>
+    <td>Scroll to "Recent Conversations" section</td>
+    <td>Shows last 5 conversations with student name, channel, last message preview.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">DASH-05</td>
+    <td><strong>Sidebar Navigation</strong></td>
+    <td>Click each sidebar link: Inbox, Leads, Funnel, Appointments, Follow-ups, Campaigns, etc.</td>
+    <td>Each click navigates to the correct page. Active link highlighted.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">DASH-06</td>
+    <td><strong>Sidebar Collapse/Expand</strong></td>
+    <td>Click the hamburger/collapse button in navbar</td>
+    <td>Sidebar collapses to icons-only. Click again to expand.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">DASH-07</td>
+    <td><strong>UserButton Menu</strong></td>
+    <td>Click UserButton (top-right corner)</td>
+    <td>Dropdown with Manage Account, Organization Profile (if applicable), Sign Out.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s4">4. Lead Management (CRM)</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-01</td>
+    <td><strong>Leads Page Loads</strong></td>
+    <td>Go to /dashboard/leads</td>
+    <td>Lead table renders with all leads for the current org. No errors.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-02</td>
+    <td><strong>Create Lead Manually</strong></td>
+    <td>1. Click "Add Lead" button<br>2. Fill form: name, phone, email, course, source, status<br>3. Submit</td>
+    <td>Lead created. Appears in the table. Toast/notification of success.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-03</td>
+    <td><strong>Lead Scoring Calculation</strong></td>
+    <td>1. Create a lead with all fields (phone, email, high intent)<br>2. Check the score displayed</td>
+    <td>Score is computed correctly: phone(+20) + email(+10) + fee question(+15) + admission question(+15) + source boost etc.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-04</td>
+    <td><strong>Lead Categories</strong></td>
+    <td>Check leads with different scores:
+        VIP (80+), Hot (50-79), Warm (20-49), Cold (&lt;20)</td>
+    <td>Category badges display correctly. Color coding: VIP=purple, Hot=red, Warm=amber, Cold=gray.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-05</td>
+    <td><strong>Lead Status Badges</strong></td>
+    <td>Check lead status values: New, Contacted, Interested, Converted, Lost</td>
+    <td>Status badges display with appropriate colors.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-06</td>
+    <td><strong>View Lead Details</strong></td>
+    <td>Click on a lead row</td>
+    <td>Slide-out detail sheet opens with all lead info, notes, activity timeline.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-07</td>
+    <td><strong>Edit Lead</strong></td>
+    <td>1. Open lead detail sheet<br>2. Edit name, phone, email, status, source<br>3. Save</td>
+    <td>Changes saved. Lead table updates.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-08</td>
+    <td><strong>Delete Lead</strong></td>
+    <td>1. Open lead detail sheet<br>2. Click "Delete"<br>3. Confirm</td>
+    <td>Lead removed from table. Confirmation toast shown.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-09</td>
+    <td><strong>Lead Filters</strong></td>
+    <td>1. Use search bar to search by name/phone/email<br>2. Filter by status (New, Contacted, etc.)<br>3. Filter by source (Chat, Website, WhatsApp, etc.)<br>4. Filter by category (VIP, Hot, Warm, Cold)</td>
+    <td>Table filters correctly. Combination of filters works (e.g., Hot + Chat).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-10</td>
+    <td><strong>Lead Sorting</strong></td>
+    <td>Click on column headers: Name, Score, Status, Source, Created At</td>
+    <td>Table sorts ascending/descending on toggle. Arrow indicator shown.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-11</td>
+    <td><strong>Lead Pagination</strong></td>
+    <td>If more than 10 leads, navigate to page 2, 3, etc.</td>
+    <td>Pagination works. Rows per page configurable.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-12</td>
+    <td><strong>Export Leads to CSV</strong></td>
+    <td>Click "Export" button</td>
+    <td>CSV file downloads with all leads. Columns: Name, Phone, Email, Course, Source, Status, Score, Category, Created At.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-13</td>
+    <td><strong>Add Note to Lead</strong></td>
+    <td>1. Open lead detail sheet<br>2. Go to Notes tab<br>3. Type note + Save</td>
+    <td>Note displayed. Author and timestamp shown.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">LEAD-14</td>
+    <td><strong>Lead Activity Timeline</strong></td>
+    <td>1. Open lead detail sheet<br>2. Go to Activity tab</td>
+    <td>Timeline shows events: Created, Status Changed, Note Added, Appointment Booked, etc. in chronological order.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s5">5. Lead Funnel (Kanban)</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">FUNNEL-01</td>
+    <td><strong>Funnel Page Loads</strong></td>
+    <td>Go to /dashboard/funnel</td>
+    <td>Kanban board with columns: New, Contacted, Interested, Converted, Lost. Leads in each column.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">FUNNEL-02</td>
+    <td><strong>Drag &amp; Drop Lead</strong></td>
+    <td>Drag a lead from "New" to "Contacted"</td>
+    <td>Lead moves to new column. Status updates to "Contacted". Activity logged.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">FUNNEL-03</td>
+    <td><strong>Funnel Counts</strong></td>
+    <td>Check column headers for lead counts</td>
+    <td>Each column shows the correct count of leads in that stage.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">FUNNEL-04</td>
+    <td><strong>Click Lead in Funnel</strong></td>
+    <td>Click on a lead card in any column</td>
+    <td>Lead detail slide-out opens (same as leads page).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s6">6. Unified Inbox / Chat</h2>
+<div class="prereq">
+  <strong>Prerequisites:</strong> At least one conversation exists from Website widget or WhatsApp.
+</div>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">INBOX-01</td>
+    <td><strong>Inbox Loads</strong></td>
+    <td>Go to /dashboard/inbox</td>
+    <td>Two-panel layout: conversation list (left) + message view (right). Conversations load.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">INBOX-02</td>
+    <td><strong>Select Conversation</strong></td>
+    <td>Click on a conversation in the list</td>
+    <td>Messages load in the right panel. Scrollable history.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">INBOX-03</td>
+    <td><strong>Filter Conversations</strong></td>
+    <td>Filter by channel: Website, WhatsApp</td>
+    <td>List filters to show only the selected channel's conversations.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">INBOX-04</td>
+    <td><strong>Filter by Status</strong></td>
+    <td>Filter by status: Active, Pending, Closed</td>
+    <td>List shows only conversations with selected status.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">INBOX-05</td>
+    <td><strong>Send Reply (Manual Mode)</strong></td>
+    <td>1. Select a conversation<br>2. Set mode to "Manual"<br>3. Type reply + Send</td>
+    <td>Message sent. Appears in chat. Conversation updated. Activity logged.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">INBOX-06</td>
+    <td><strong>Switch to Auto Mode</strong></td>
+    <td>Toggle conversation mode from "Manual" to "Auto"</td>
+    <td>Mode switches. AI will auto-respond to next incoming message.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">INBOX-07</td>
+    <td><strong>Assign Conversation</strong></td>
+    <td>Assign a conversation to a team member</td>
+    <td>Conversation shows assigned user. Activity logged.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">INBOX-08</td>
+    <td><strong>Real-time Updates</strong></td>
+    <td>Keep inbox open. Send a test message from another window/tab.</td>
+    <td>Conversation list updates. New message badge appears.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s7">7. AI Receptionist</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">AI-REC-01</td>
+    <td><strong>Chat Interface Loads</strong></td>
+    <td>Go to /dashboard/counselor</td>
+    <td>Chat UI renders with conversation list + message panel + lead info panel.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AI-REC-02</td>
+    <td><strong>Send Message to Visitor</strong></td>
+    <td>1. Select a conversation<br>2. Type message<br>3. Send</td>
+    <td>Message sent and displayed. AI may respond if in auto mode.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AI-REC-03</td>
+    <td><strong>Lead Info Panel</strong></td>
+    <td>Select a conversation with an identified lead</td>
+    <td>Lead panel shows name, phone, email, score, status, source, courses interested.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AI-REC-04</td>
+    <td><strong>AI Context-Aware Responses</strong></td>
+    <td>Ask about courses, fees, admission process in auto mode</td>
+    <td>AI responds using Knowledge Base + FAQ context. Response references correct org info.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AI-REC-05</td>
+    <td><strong>Bilingual Support (Hinglish)</strong></td>
+    <td>Send a message in Hindi/Hinglish (e.g., "course ke baare mein batao")</td>
+    <td>AI responds in Hindi/Hinglish, understanding the query correctly.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AI-REC-06</td>
+    <td><strong>Lead Extraction from Chat</strong></td>
+    <td>Start a conversation and provide name + phone during chat</td>
+    <td>AI extracts lead info. Lead created/updated automatically with extracted details.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">AI-REC-07</td>
+    <td><strong>Streaming Response</strong></td>
+    <td>Send a query that requires a long response</td>
+    <td>Response streams character by character (not a sudden complete response).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s8">8. Appointment Scheduling</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">APPTS-01</td>
+    <td><strong>Appointments Page Loads</strong></td>
+    <td>Go to /dashboard/appointments</td>
+    <td>Calendar view + appointment table for selected date.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">APPTS-02</td>
+    <td><strong>Calendar Navigation</strong></td>
+    <td>Click next/previous month arrows</td>
+    <td>Calendar updates to show correct month. Dates with appointments are highlighted.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">APPTS-03</td>
+    <td><strong>Select Date</strong></td>
+    <td>Click a date on the calendar</td>
+    <td>Appointment list updates to show appointments for that date.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">APPTS-04</td>
+    <td><strong>Book Appointment</strong></td>
+    <td>1. Click "Book Appointment"<br>2. Select date + time slot<br>3. Enter lead name, phone, email<br>4. Submit</td>
+    <td>Appointment created. Shows in the list. Slot no longer available. Activity logged on lead.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">APPTS-05</td>
+    <td><strong>Slot Availability</strong></td>
+    <td>Check available slots for a date with existing appointments</td>
+    <td>Slots at capacity show as "Booked". Available slots shown correctly.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">APPTS-06</td>
+    <td><strong>Update Appointment Status</strong></td>
+    <td>Change status from "Pending" to "Confirmed" or "Completed"</td>
+    <td>Status updates. Badge color changes accordingly.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">APPTS-07</td>
+    <td><strong>Reschedule Appointment</strong></td>
+    <td>Click "Reschedule" → pick new date/time</td>
+    <td>Appointment date/time updated. Activity logged. Old slot freed, new slot booked.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">APPTS-08</td>
+    <td><strong>Cancel Appointment</strong></td>
+    <td>Click "Cancel" → confirm</td>
+    <td>Status changes to "Cancelled". Shows cancelled timestamp. Slot freed up.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">APPTS-09</td>
+    <td><strong>Link Lead to Appointment</strong></td>
+    <td>Book appointment with an existing lead's phone/email</td>
+    <td>Appointment linked to lead. Shows in lead's activity timeline.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s9">9. Follow-up Automation</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">FOLLOW-01</td>
+    <td><strong>Follow-up Rules Page Loads</strong></td>
+    <td>Go to /dashboard/follow-ups</td>
+    <td>Rules list + execution logs displayed.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">FOLLOW-02</td>
+    <td><strong>Create Follow-up Rule</strong></td>
+    <td>1. Click "Add Rule"<br>2. Name: "No Response Follow-up"<br>3. Trigger: "No Response"<br>4. Delay: 24 hours<br>5. Channel: WhatsApp<br>6. Template: "Hi {{name}}, ..."<br>7. Save</td>
+    <td>Rule created. Appears in rules list. Enabled by default.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">FOLLOW-03</td>
+    <td><strong>Edit Rule</strong></td>
+    <td>Edit existing rule: change trigger, delay, template</td>
+    <td>Rule updated. Changes reflected.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">FOLLOW-04</td>
+    <td><strong>Toggle Rule Enabled/Disabled</strong></td>
+    <td>Toggle the enable switch on a rule</td>
+    <td>Rule enabled/disabled. Disabled rules are not processed by cron.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">FOLLOW-05</td>
+    <td><strong>Delete Rule</strong></td>
+    <td>Delete a rule</td>
+    <td>Rule removed. Confirmation required before deletion.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">FOLLOW-06</td>
+    <td><strong>Follow-up Logs</strong></td>
+    <td>Check the execution logs section</td>
+    <td>Logs show: scheduled time, sent time, status (sent/failed), error message if any.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s10">10. Marketing Campaigns</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">CAMP-01</td>
+    <td><strong>Campaigns Page Loads</strong></td>
+    <td>Go to /dashboard/campaigns</td>
+    <td>Campaign list with name, slug, views, submissions, status, created date.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">CAMP-02</td>
+    <td><strong>Create Campaign</strong></td>
+    <td>1. Click "Create Campaign"<br>2. Enter name, headline, subtitle, CTA text<br>3. Select form fields (name, phone, email, course)<br>4. Choose button color<br>5. Save</td>
+    <td>Campaign created. Slug auto-generated. URL shown for sharing.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">CAMP-03</td>
+    <td><strong>Public Campaign Page</strong></td>
+    <td>Open the campaign URL in incognito/private window</td>
+    <td>Page renders with headline, subtitle, form fields, CTA button. No auth required.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">CAMP-04</td>
+    <td><strong>Campaign Form Submission Creates Lead</strong></td>
+    <td>1. Open campaign page<br>2. Fill form + Submit<br>3. Check leads page in dashboard</td>
+    <td>New lead created with source="campaign". Submission count incremented.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">CAMP-05</td>
+    <td><strong>Toggle Campaign Active/Inactive</strong></td>
+    <td>Toggle active status of a campaign</td>
+    <td>Inactive campaign shows "inactive" message on public page.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">CAMP-06</td>
+    <td><strong>Delete Campaign</strong></td>
+    <td>Delete a campaign (with confirmation)</td>
+    <td>Campaign removed. Public URL returns 404 or "not found".</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s11">11. Knowledge Base &amp; FAQ Management</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">KB-01</td>
+    <td><strong>FAQ List Loads</strong></td>
+    <td>Go to /dashboard/faqs</td>
+    <td>FAQ list with question, answer, category. CRUD options available.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">KB-02</td>
+    <td><strong>Create FAQ</strong></td>
+    <td>1. Click "Add FAQ"<br>2. Enter question, answer, select category<br>3. Save</td>
+    <td>FAQ created. Auto-embedded for AI context.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">KB-03</td>
+    <td><strong>Edit FAQ</strong></td>
+    <td>Edit existing FAQ — update question, answer, category</td>
+    <td>FAQ updated. Embedding regenerated.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">KB-04</td>
+    <td><strong>Delete FAQ</strong></td>
+    <td>Delete an FAQ</td>
+    <td>FAQ removed. Embedding removed.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">KB-05</td>
+    <td><strong>Knowledge Base List Loads</strong></td>
+    <td>Go to /dashboard/knowledge-base</td>
+    <td>KB entries list with title, content preview, category.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">KB-06</td>
+    <td><strong>Create KB Entry</strong></td>
+    <td>Enter title, content, category (Courses, Fees, Admissions, etc.)</td>
+    <td>KB entry created. Auto-embedded for AI context.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">KB-07</td>
+    <td><strong>AI Uses KB/FAQ for Context</strong></td>
+    <td>1. Create a FAQ: "What is the fee for BCA?" → Answer: "Rs 50,000/year"<br>2. In AI chat, ask: "What is the fee for BCA?"</td>
+    <td>AI responds with the correct answer from FAQ/KB.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s12">12. Team &amp; Member Management</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">TEAM-01</td>
+    <td><strong>Members Page Loads</strong></td>
+    <td>Go to /dashboard/members</td>
+    <td>List of team members with name, email, role, status. Owner/Staff badges.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">TEAM-02</td>
+    <td><strong>Invite Member</strong></td>
+    <td>Click "Invite Member" → enter email + role</td>
+    <td>Invitation sent via Clerk. Member appears as "Pending" until accepted.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">TEAM-03</td>
+    <td><strong>Change Member Role</strong></td>
+    <td>Change a STAFF member to OWNER (or vice versa)</td>
+    <td>Role updated. Permissions adjust accordingly.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">TEAM-04</td>
+    <td><strong>Remove Member</strong></td>
+    <td>Remove a STAFF member</td>
+    <td>Member removed from org. Any assigned conversations become unassigned.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">TEAM-05</td>
+    <td><strong>Staff Cannot Access Settings</strong></td>
+    <td>Log in as STAFF → try to visit /dashboard/settings</td>
+    <td>STAFF role cannot access Settings or Billing pages. Redirect or error shown.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">TEAM-06</td>
+    <td><strong>Owner Can Manage All</strong></td>
+    <td>Log in as OWNER → access settings, billing, members, etc.</td>
+    <td>Full access to all features.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s13">13. Analytics &amp; Dashboard Stats</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">ANALYTICS-01</td>
+    <td><strong>Analytics Page Loads</strong></td>
+    <td>Go to /dashboard/analytics</td>
+    <td>Stats cards + charts displayed. No errors.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ANALYTICS-02</td>
+    <td><strong>Popular Questions Chart</strong></td>
+    <td>Check the "Popular Questions" chart/table</td>
+    <td>Shows most frequently asked questions (aggregated from conversations). Bar chart or ranked list.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ANALYTICS-03</td>
+    <td><strong>Conversion Metrics</strong></td>
+    <td>Check conversion rate, lead-to-appointment rate</td>
+    <td>Metrics compute correctly based on lead/appointment data.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ANALYTICS-04</td>
+    <td><strong>Leads by Source</strong></td>
+    <td>View "Leads by Source" chart</td>
+    <td>Pie/bar chart shows distribution of leads across sources (Chat, WhatsApp, Campaign, etc.).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s14">14. Onboarding Wizard</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-01</td>
+    <td><strong>Onboarding Redirect After Sign-up</strong></td>
+    <td>1. Sign up with a new account<br>2. Create/select organization</td>
+    <td>Redirected to /dashboard/onboarding if no org exists.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-02</td>
+    <td><strong>Step 1 — Institute Info</strong></td>
+    <td>Fill in: phone, email, website, address, logo (optional)</td>
+    <td>Data saved. Advances to next step.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-03</td>
+    <td><strong>Step 2 — Courses</strong></td>
+    <td>Add course: name, description, duration. Add multiple courses.</td>
+    <td>Courses created for the org.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-04</td>
+    <td><strong>Step 3 — Fees</strong></td>
+    <td>Set fee amount + discount per course</td>
+    <td>Fees saved per course.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-05</td>
+    <td><strong>Step 4 — Working Hours</strong></td>
+    <td>Set opening time, closing time, working days</td>
+    <td>Working hours saved. Affects appointment slot generation.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-06</td>
+    <td><strong>Step 5 — Admission Info</strong></td>
+    <td>Enter admission process description, documents required</td>
+    <td>Saved as KB entries for AI context.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-07</td>
+    <td><strong>Step 6 — Greeting Message</strong></td>
+    <td>Set AI greeting message (e.g., "Welcome to our institute!")</td>
+    <td>Greeting saved. AI uses this greeting for new conversations.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-08</td>
+    <td><strong>Complete Onboarding</strong></td>
+    <td>Finish all steps</td>
+    <td>Redirected to /dashboard. Onboarding marked complete. Users redirected to dashboard on future visits.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-09</td>
+    <td><strong>Onboarding Step Navigation</strong></td>
+    <td>Use Back/Next buttons, click step indicators</td>
+    <td>Navigation works. Previous step data preserved.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ONBRD-10</td>
+    <td><strong>Data Persistence Across Steps</strong></td>
+    <td>Refresh page during onboarding</td>
+    <td>Data already entered in earlier steps is preserved. Doesn't restart from step 1.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s15">15. Organization Settings</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">SETT-01</td>
+    <td><strong>General Settings</strong></td>
+    <td>Go to /dashboard/settings/general → edit phone, email, address, hours, greeting</td>
+    <td>Settings saved. Changes reflected in AI responses and appointment slots.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SETT-02</td>
+    <td><strong>Appointment Settings</strong></td>
+    <td>Go to /dashboard/settings/appointments → change working days, hours, duration, max bookings</td>
+    <td>Settings saved. Slot generation uses new settings.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SETT-03</td>
+    <td><strong>Widget Settings</strong></td>
+    <td>Go to /dashboard/settings/widget → change primary color, toggle dark mode</td>
+    <td>Settings saved. Widget reflects new color/dark mode on page reload.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SETT-04</td>
+    <td><strong>Widget Embed Code</strong></td>
+    <td>Check the embed code displayed in widget settings</td>
+    <td>Correct `<script>` tag with org slug.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SETT-05</td>
+    <td><strong>Billing Page Loads</strong></td>
+    <td>Go to /dashboard/settings/billing</td>
+    <td>Current plan shown. Available plans listed with pricing. Upgrade/downgrade buttons.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SETT-06</td>
+    <td><strong>Members Settings Page</strong></td>
+    <td>Go to /dashboard/settings/members</td>
+    <td>Same as /dashboard/members. Members list with roles management.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s16">16. Billing &amp; Subscriptions (Razorpay)</h2>
+<div class="warn">
+  <strong>Note:</strong> Requires Razorpay test mode keys. Use Razorpay test card numbers for payments.
+</div>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">BILL-01</td>
+    <td><strong>View Plans</strong></td>
+    <td>Go to billing settings → view available plans: Free, Starter (Rs 999), Professional (Rs 2,999)</td>
+    <td>Plans displayed with feature lists and pricing. Current plan highlighted.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">BILL-02</td>
+    <td><strong>Upgrade to Starter</strong></td>
+    <td>1. Click "Upgrade" on Starter plan<br>2. Razorpay checkout opens<br>3. Use test card: 4111 1111 1111 1111, any future date, any CVV<br>4. Complete payment</td>
+    <td>Subscription created. Plan upgraded to Starter. Billing page reflects new plan.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">BILL-03</td>
+    <td><strong>Upgrade to Professional</strong></td>
+    <td>Click "Upgrade" from Starter to Professional</td>
+    <td>Plan upgraded. Prorated charges if applicable.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">BILL-04</td>
+    <td><strong>Cancel Subscription</strong></td>
+    <td>Click "Cancel Subscription" → confirm</td>
+    <td>Subscription cancelled. Plan reverts to Free at end of billing period.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">BILL-05</td>
+    <td><strong>Subscription Status Sync</strong></td>
+    <td>Check Razorpay dashboard → change subscription status → verify in app billing page</td>
+    <td>Subscription status synced (active, past_due, cancelled).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">BILL-06</td>
+    <td><strong>Razorpay Webhook Received</strong></td>
+    <td>Check server logs for Razorpay webhook events</td>
+    <td>Webhook events (subscription.activated, subscription.charged, etc.) are processed.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s17">17. Embeddable Website Widget</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">WIDGET-01</td>
+    <td><strong>Widget Test Page Loads</strong></td>
+    <td>Go to /widget-test</td>
+    <td>Page shows widget simulation. Floating action button (chat bubble) appears.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WIDGET-02</td>
+    <td><strong>Open Widget Chat</strong></td>
+    <td>Click the floating chat button</td>
+    <td>Chat panel opens with org greeting message. Input field visible.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WIDGET-03</td>
+    <td><strong>Send Message via Widget</strong></td>
+    <td>Type a message and send</td>
+    <td>Message sent. AI responds. Response displays in chat panel.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WIDGET-04</td>
+    <td><strong>Style Isolation</strong></td>
+    <td>Inspect widget elements in browser DevTools</td>
+    <td>Widget renders in Shadow DOM. No style conflicts with host page.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WIDGET-05</td>
+    <td><strong>Dark Mode</strong></td>
+    <td>Toggle dark mode in the widget</td>
+    <td>Widget switches to dark theme. Styling correct.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WIDGET-06</td>
+    <td><strong>Conversation Persistence</strong></td>
+    <td>1. Send some messages<br>2. Close widget<br>3. Reopen widget</td>
+    <td>Messages persist. Conversation continues.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WIDGET-07</td>
+    <td><strong>Widget Responsive</strong></td>
+    <td>Resize browser to mobile width (375px)</td>
+    <td>Widget adapts: full-width on mobile, proper sizing on desktop.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WIDGET-08</td>
+    <td><strong>Cross-origin Widget</strong></td>
+    <td>Embed widget on a different domain (e.g., localhost:3001 or file://)</td>
+    <td>Widget loads and functions. CORS headers allow the request.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WIDGET-09</td>
+    <td><strong>Widget Live Chat Creates Conversation</strong></td>
+    <td>Send a message via widget → check Dashboard Inbox</td>
+    <td>New conversation appears in the inbox with channel="Website".</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s18">18. WhatsApp Business Integration</h2>
+<div class="warn">
+  <strong>Note:</strong> Requires a Meta Business account, WhatsApp Business API setup, and a test phone number.
+  Use a test number from Meta Developer Dashboard.
+</div>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">WA-01</td>
+    <td><strong>WhatsApp Webhook Setup</strong></td>
+    <td>Configure Meta webhook to point to /api/webhooks/whatsapp. Send verification request.</td>
+    <td>Webhook verification succeeds (returns 200 with challenge).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WA-02</td>
+    <td><strong>Receive WhatsApp Message</strong></td>
+    <td>Send a WhatsApp message to the org's WhatsApp number</td>
+    <td>Message received. Conversation created in inbox. Lead created/extracted.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WA-03</td>
+    <td><strong>Auto Reply via AI</strong></td>
+    <td>Send a question about courses/fees via WhatsApp</td>
+    <td>AI responds automatically within a few seconds. Response sent as WhatsApp message.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WA-04</td>
+    <td><strong>Manual Mode WhatsApp</strong></td>
+    <td>1. Set conversation mode to "Manual"<br>2. Send another WhatsApp message</td>
+    <td>Message stored but NOT auto-replied. Shows as pending in inbox.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WA-05</td>
+    <td><strong>Send WhatsApp from Inbox</strong></td>
+    <td>In inbox, reply to a WhatsApp conversation in manual mode</td>
+    <td>Reply sent via WhatsApp API to the student.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">WA-06</td>
+    <td><strong>WhatsApp Follow-up</strong></td>
+    <td>Create a follow-up rule with WhatsApp channel. Wait for cron trigger.</td>
+    <td>Follow-up WhatsApp message sent. Logged in follow-up logs.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s19">19. AI Copilot (Internal Assistant)</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">COPILOT-01</td>
+    <td><strong>Copilot Page Loads</strong></td>
+    <td>Go to /dashboard/copilot</td>
+    <td>Chat interface renders with pre-made suggestion buttons.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">COPILOT-02</td>
+    <td><strong>Ask About Lead Data</strong></td>
+    <td>Type: "How many leads do we have this month?"</td>
+    <td>Copilot queries org stats and responds with lead count and breakdown.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">COPILOT-03</td>
+    <td><strong>Ask for Follow-up Suggestions</strong></td>
+    <td>Type: "Suggest a follow-up for high-score leads"</td>
+    <td>Copilot suggests follow-up message templates for high-intent leads.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">COPILOT-04</td>
+    <td><strong>Ask About Analytics</strong></td>
+    <td>Type: "What's our conversion rate?"</td>
+    <td>Copilot responds with conversion metrics from org data.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">COPILOT-05</td>
+    <td><strong>Use Suggestion Buttons</strong></td>
+    <td>Click on pre-made suggestion buttons</td>
+    <td>Query is sent and copilot responds appropriately.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">COPILOT-06</td>
+    <td><strong>Streaming Responses</strong></td>
+    <td>Ask a complex question requiring a long response</td>
+    <td>Response streams character by character (not all at once).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s20">20. Super Admin Panel</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">ADMIN-01</td>
+    <td><strong>Admin Panel Loads</strong></td>
+    <td>Log in as a user whose email is in SUPER_ADMIN_EMAILS → /dashboard/admin</td>
+    <td>Admin dashboard loads with platform-wide stats: total orgs, leads, chats, messages, appointments.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ADMIN-02</td>
+    <td><strong>Non-admin Cannot Access</strong></td>
+    <td>Log in as a regular user → /dashboard/admin</td>
+    <td>Access denied. Redirect or error shown.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ADMIN-03</td>
+    <td><strong>Org List with Metrics</strong></td>
+    <td>Check organization list on admin panel</td>
+    <td>Each org shows name, leads count, conversation count, appointment count, subscription status.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s21">21. Multi-Tenant Data Isolation</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">MT-01</td>
+    <td><strong>Org A Sees Only Org A Data</strong></td>
+    <td>1. Log in as Org A<br>2. Check leads, conversations, appointments</td>
+    <td>Data is scoped to Org A only.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">MT-02</td>
+    <td><strong>Org B Sees Only Org B Data</strong></td>
+    <td>1. Switch to Org B (or log in as Org B user)<br>2. Check leads, conversations, appointments</td>
+    <td>Data is scoped to Org B only. No data from Org A visible.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">MT-03</td>
+    <td><strong>Widget Routes to Correct Org</strong></td>
+    <td>Load widget for Org A ↔ send message</td>
+    <td>Conversation created under Org A, not Org B.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">MT-04</td>
+    <td><strong>Campaign Route Scoped</strong></td>
+    <td>Campaign slug unique per org. Two orgs can have same slug.</td>
+    <td>Campaign URL routes to correct org's campaign.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s22">22. Error Handling &amp; Edge Cases</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-01</td>
+    <td><strong>404 Page</strong></td>
+    <td>Visit /nonexistent-page</td>
+    <td>Custom 404 page displayed (not generic browser error).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-02</td>
+    <td><strong>Empty State — No Leads</strong></td>
+    <td>Create new org with no data → go to /dashboard/leads</td>
+    <td>"No leads yet" empty state with CTA to add first lead.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-03</td>
+    <td><strong>Empty State — No Conversations</strong></td>
+    <td>New org → /dashboard/inbox</td>
+    <td>"No conversations yet" empty state.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-04</td>
+    <td><strong>Empty State — No Appointments</strong></td>
+    <td>New org → /dashboard/appointments</td>
+    <td>"No appointments" empty state for selected date.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-05</td>
+    <td><strong>API Error Display</strong></td>
+    <td>Disconnect network → try to load leads</td>
+    <td>Error toast/notification with retry option. Graceful degradation.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-06</td>
+    <td><strong>Form Validation</strong></td>
+    <td>Submit forms with empty required fields, invalid email, invalid phone</td>
+    <td>Inline validation errors. Form not submitted. Clear error messages.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-07</td>
+    <td><strong>Duplicate Lead Prevention</strong></td>
+    <td>Try to create a lead with same phone number as existing lead</td>
+    <td>Either prevented or handled gracefully (merged/updated).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-08</td>
+    <td><strong>Concurrent Edit</strong></td>
+    <td>Open same lead in two tabs → edit in both → save both</td>
+    <td>Last write wins or optimistic concurrency handled.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-09</td>
+    <td><strong>Browser Back/Forward</strong></td>
+    <td>Navigate through dashboard pages → use browser back/forward</td>
+    <td>Navigation works correctly. No broken states.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">ERR-10</td>
+    <td><strong>API Rate Limiting</strong></td>
+    <td>Send rapid requests to an API endpoint</td>
+    <td>Rate limiting kicks in (429 Too Many Requests). Graceful error message.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s23">23. Responsive Design &amp; Mobile</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">RESP-01</td>
+    <td><strong>Desktop Layout (1920x1080)</strong></td>
+    <td>View all dashboard pages on a desktop screen</td>
+    <td>Full layout visible. Sidebar visible. No overlapping elements.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">RESP-02</td>
+    <td><strong>Tablet Layout (768px width)</strong></td>
+    <td>Resize browser to 768px wide. Navigate all pages.</td>
+    <td>Sidebar collapses or becomes hamburger menu. Content reflows.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">RESP-03</td>
+    <td><strong>Mobile Layout (375px width)</strong></td>
+    <td>Resize browser to 375px wide</td>
+    <td>Responsive layout: stacked cards, full-width inputs, accessible menus.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">RESP-04</td>
+    <td><strong>Touch Interactions</strong></td>
+    <td>Use device toolbar (Chrome DevTools) to simulate touch</td>
+    <td>Buttons, dropdowns, drag-and-drop work with touch.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">RESP-05</td>
+    <td><strong>Widget Mobile View</strong></td>
+    <td>Open widget on mobile width (375px)</td>
+    <td>Widget fills screen width appropriately. Usable on mobile.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s24">24. Performance &amp; Load</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">PERF-01</td>
+    <td><strong>Page Load Time</strong></td>
+    <td>Open DevTools → Network tab. Measure load time for each page.</td>
+    <td>Pages load within 3 seconds on good connection. <strong>Target:</strong> &lt;2s.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">PERF-02</td>
+    <td><strong>API Response Time</strong></td>
+    <td>Measure API response times for /api/leads, /api/conversations, /api/appointments</td>
+    <td>API responses within 500ms for typical datasets.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">PERF-03</td>
+    <td><strong>AI Response Time</strong></td>
+    <td>Send a query via chat, measure time to first token</td>
+    <td>First token appears within 3 seconds. Streaming smooth.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">PERF-04</td>
+    <td><strong>Lead Table with 1000+ Records</strong></td>
+    <td>Populate 1000+ leads via API/script → load /dashboard/leads</td>
+    <td>Table loads with pagination. No UI freeze.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">PERF-05</td>
+    <td><strong>Concurrent Users</strong></td>
+    <td>Simulate 5-10 users accessing the app simultaneously</td>
+    <td>No crashes. Response times remain acceptable.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">PERF-06</td>
+    <td><strong>Database Query Performance</strong></td>
+    <td>Check Neon DB query times in logs for complex queries (dashboard stats, analytics)</td>
+    <td>Queries execute within 200ms. Indexed properly.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="s25">25. Security &amp; Compliance</h2>
+<table>
+  <tr>
+    <th class="id-col">ID</th><th class="feature-col">Test Case</th><th class="steps-col">Steps</th><th class="expected-col">Expected Result</th><th class="status-col">PASS/FAIL</th><th>Notes</th>
+  </tr>
+  <tr>
+    <td class="id-col">SEC-01</td>
+    <td><strong>Clerk Auth Bypass</strong></td>
+    <td>Try to access /dashboard/* without auth token</td>
+    <td>Redirected to /sign-in. API returns 401.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SEC-02</td>
+    <td><strong>API Auth Check</strong></td>
+    <td>Call /api/leads without auth header</td>
+    <td>Returns 401 Unauthorized.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SEC-03</td>
+    <td><strong>Org Data Isolation</strong></td>
+    <td>Try to access Org B's lead by ID while logged into Org A</td>
+    <td>Returns 404 or 403. Data not exposed.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SEC-04</td>
+    <td><strong>Webhook Signature Verification</strong></td>
+    <td>Send unauthenticated request to /api/webhooks/clerk</td>
+    <td>Webhook rejected (invalid signature).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SEC-05</td>
+    <td><strong>CORS Headers on Widget API</strong></td>
+    <td>Check /api/widget/config response headers</td>
+    <td>Access-Control-Allow-Origin: * present. Cross-origin requests allowed.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SEC-06</td>
+    <td><strong>CORS Not on Non-Widget APIs</strong></td>
+    <td>Check /api/leads response headers</td>
+    <td>No wildcard CORS headers present. Cross-origin blocked.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SEC-07</td>
+    <td><strong>Razorpay Webhook Verification</strong></td>
+    <td>Send fake webhook payload to /api/razorpay/webhook</td>
+    <td>Webhook rejected (signature mismatch).</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SEC-08</td>
+    <td><strong>XSS Prevention</strong></td>
+    <td>Try to inject script in lead name, message content, campaign headline</td>
+    <td>Input is sanitized. Script not executed.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="id-col">SEC-09</td>
+    <td><strong>Environment Variables Not Exposed</strong></td>
+    <td>Check page source for any API keys or secrets</td>
+    <td>No secrets in client-side code. Only NEXT_PUBLIC_* variables exposed.</td>
+    <td class="status-col"></td>
+    <td></td>
+  </tr>
+</table>
+
+<!-- ===================================================================================== -->
+<h2 id="summary">Test Summary</h2>
+<table class="summary-table">
+  <tr>
+    <th>Section</th><th>Total Tests</th><th>Passed</th><th>Failed</th><th>Not Tested</th><th>Pass %</th>
+  </tr>
+  <tr><td>1. Authentication &amp; Authorization</td><td>10</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>2. Landing Page &amp; Public Routes</td><td>4</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>3. Dashboard</td><td>7</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>4. Lead Management (CRM)</td><td>14</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>5. Lead Funnel (Kanban)</td><td>4</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>6. Unified Inbox</td><td>8</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>7. AI Receptionist</td><td>7</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>8. Appointment Scheduling</td><td>9</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>9. Follow-up Automation</td><td>6</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>10. Marketing Campaigns</td><td>6</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>11. Knowledge Base &amp; FAQ</td><td>7</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>12. Team &amp; Member Management</td><td>6</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>13. Analytics</td><td>4</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>14. Onboarding Wizard</td><td>10</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>15. Organization Settings</td><td>6</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>16. Billing &amp; Subscriptions</td><td>6</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>17. Embeddable Website Widget</td><td>9</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>18. WhatsApp Integration</td><td>6</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>19. AI Copilot</td><td>6</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>20. Super Admin Panel</td><td>3</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>21. Multi-Tenant Isolation</td><td>4</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>22. Error Handling &amp; Edge Cases</td><td>10</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>23. Responsive Design</td><td>5</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>24. Performance &amp; Load</td><td>6</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>25. Security &amp; Compliance</td><td>9</td><td></td><td></td><td></td><td></td></tr>
+  <tr style="background: #f0f7ff; font-weight: bold;">
+    <td>TOTAL</td><td>156</td><td></td><td></td><td></td><td></td>
+  </tr>
+</table>
+
+<div class="note" style="margin-top: 30px;">
+  <strong>Bug Log:</strong> Use the space below to log any issues found during testing.
+</div>
+<table>
+  <tr><th>#</th><th>Test ID</th><th>Issue Description</th><th>Severity (High/Med/Low)</th><th>Status (Open/Fixed)</th></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+<div style="margin-top: 40px; text-align: center; color: #94a3b8; font-size: 10pt; border-top: 1px solid #e2e8f0; padding-top: 15px;">
+  <strong>AI Admission Counselor</strong> — Complete QA Testing Checklist v1.0<br>
+  Generated on June 15, 2026 &bullet; Powered by <a href="https://opencode.ai" target="_blank">OpenCode</a>
+</div>
+
+</body>
+</html>

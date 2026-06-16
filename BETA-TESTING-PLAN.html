@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Admission Counselor - Beta Testing Plan</title>
+<style>
+  body { font-family: 'Calibri', 'Segoe UI', Arial, sans-serif; font-size: 11pt; line-height: 1.5; color: #1a1a1a; max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+  h1 { font-size: 22pt; color: #7C3AED; border-bottom: 3px solid #7C3AED; padding-bottom: 10px; }
+  h2 { font-size: 16pt; color: #5B21B6; margin-top: 30px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+  h3 { font-size: 13pt; color: #1a1a1a; margin-top: 20px; }
+  h4 { font-size: 11pt; color: #444; margin-top: 14px; }
+  p { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10pt; }
+  th, td { border: 1px solid #ccc; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background-color: #7C3AED; color: white; font-weight: 600; }
+  tr:nth-child(even) { background-color: #f8f8ff; }
+  .pass { color: #059669; font-weight: bold; }
+  .fail { color: #dc2626; font-weight: bold; }
+  .warn { color: #d97706; font-weight: bold; }
+  .info { background-color: #eef2ff; border-left: 4px solid #7C3AED; padding: 10px 14px; margin: 10px 0; }
+  .critical { background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 10px 14px; margin: 10px 0; }
+  .checkbox { font-family: 'Segoe UI', sans-serif; }
+  .status-box { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 9pt; font-weight: 600; }
+  .status-pass { background: #d1fae5; color: #065f46; }
+  .status-fail { background: #fee2e2; color: #991b1b; }
+  .status-skip { background: #fef3c7; color: #92400e; }
+  .status-na { background: #e5e7eb; color: #374151; }
+  ol { padding-left: 20px; margin: 4px 0; }
+  ul { padding-left: 20px; margin: 4px 0; }
+  li { margin: 3px 0; }
+  .meta { color: #666; font-size: 10pt; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px; }
+  .page-break { page-break-before: always; }
+  .severity-high { background: #fef2f2; }
+  .severity-mid { background: #fffbeb; }
+  .severity-low { background: #f0fdf4; }
+</style>
+</head>
+<body>
+
+<h1>AI Admission Counselor — Beta Testing Plan</h1>
+<p><strong>Version:</strong> 1.0 &nbsp;|&nbsp; <strong>Date:</strong> June 2026 &nbsp;|&nbsp; <strong>Platform:</strong> Web (Next.js 16) &nbsp;|&nbsp; <strong>Tester:</strong> _________________</p>
+
+<div class="info">
+<strong>Instructions:</strong> For each test case, mark the result as ✓ PASS, ✗ FAIL, or — SKIP (if not applicable). Note any bugs, errors, or unexpected behavior in the "Notes" column. At the end, fill the summary sheet.
+</div>
+
+<!-- ============================================================ -->
+<h2>Section 1: Authentication &amp; Access Control</h2>
+<!-- ============================================================ -->
+
+<h3>1.1 Sign Up (Email)</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>1.1.1</td><td>Sign up with valid email + password</td><td>1. Go to /sign-up<br>2. Enter email + password<br>3. Click Submit<br>4. Verify email via OTP</td><td>Account created, redirected to onboarding</td><td></td><td></td></tr>
+<tr><td>1.1.2</td><td>Sign up with Google OAuth</td><td>1. Click "Continue with Google"<br>2. Select Google account</td><td>Account created, redirected to onboarding</td><td></td><td></td></tr>
+<tr><td>1.1.3</td><td>Sign up with invalid email</td><td>1. Enter "notanemail"<br>2. Click Submit</td><td>Validation error shown, not submitted</td><td></td><td></td></tr>
+<tr><td>1.1.4</td><td>Sign up with weak password</td><td>1. Enter "123" as password</td><td>Password strength error shown</td><td></td><td></td></tr>
+<tr><td>1.1.5</td><td>Sign up with existing email</td><td>1. Enter already-registered email</td><td>Error: email already in use</td><td></td><td></td></tr>
+<tr><td>1.1.6</td><td>Verify email OTP</td><td>1. Check email for OTP<br>2. Enter OTP in form</td><td>Email verified, redirected to onboarding</td><td></td><td></td></tr>
+<tr><td>1.1.7</td><td>Resend OTP</td><td>1. Click "Resend code"</td><td>New OTP sent to email</td><td></td><td></td></tr>
+</table>
+
+<h3>1.2 Sign In</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>1.2.1</td><td>Sign in with valid email + password</td><td>1. Go to /sign-in<br>2. Enter credentials<br>3. Click Submit</td><td>Signed in, redirected to /dashboard</td><td></td><td></td></tr>
+<tr><td>1.2.2</td><td>Sign in with Google OAuth</td><td>1. Click "Continue with Google"</td><td>Signed in, redirected to /dashboard</td><td></td><td></td></tr>
+<tr><td>1.2.3</td><td>Sign in with wrong password</td><td>1. Enter valid email, wrong password</td><td>Error: invalid credentials</td><td></td><td></td></tr>
+<tr><td>1.2.4</td><td>Sign in with unregistered email</td><td>1. Enter never-registered email</td><td>Error: user not found</td><td></td><td></td></tr>
+<tr><td>1.2.5</td><td>Forgot password flow</td><td>1. Click "Forgot password"<br>2. Enter email<br>3. Check email for reset link</td><td>Password reset email sent</td><td></td><td></td></tr>
+</table>
+
+<h3>1.3 Middleware / Route Protection</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>1.3.1</td><td>Unauthenticated access to /dashboard</td><td>1. Sign out<br>2. Go to /dashboard</td><td>Redirected to /sign-in</td><td></td><td></td></tr>
+<tr><td>1.3.2</td><td>Unauthenticated access to /dashboard/leads</td><td>1. Sign out<br>2. Go to /dashboard/leads</td><td>Redirected to /sign-in</td><td></td><td></td></tr>
+<tr><td>1.3.3</td><td>Unauthenticated access to any /dashboard/* path</td><td>1. Sign out<br>2. Try /dashboard/*</td><td>All redirect to /sign-in</td><td></td><td></td></tr>
+<tr><td>1.3.4</td><td>Public routes accessible without auth</td><td>1. Sign out<br>2. Go to /, /sign-in, /sign-up, /landing/*, /widget.js, /widget-test</td><td>All load without redirect</td><td></td><td></td></tr>
+<tr><td>1.3.5</td><td>After sign-in, redirect to original page</td><td>1. Sign out<br>2. Go to /dashboard/leads<br>3. Sign in</td><td>Redirected to /dashboard/leads (not /dashboard)</td><td></td><td></td></tr>
+</table>
+
+<h3>1.4 Session &amp; Logout</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>1.4.1</td><td>Sign out</td><td>1. Click user avatar → Sign Out</td><td>Redirected to homepage, session cleared</td><td></td><td></td></tr>
+<tr><td>1.4.2</td><td>Session persists on page refresh</td><td>1. Sign in<br>2. Refresh any page</td><td>Still signed in, no errors</td><td></td><td></td></tr>
+<tr><td>1.4.3</td><td>Session persists on tab close/reopen</td><td>1. Sign in<br>2. Close tab<br>3. Open app again in new tab</td><td>Still signed in</td><td></td><td></td></tr>
+</table>
+
+<h3>1.5 Multi-tenant Isolation</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>1.5.1</td><td>Create second org (same user)</td><td>1. Sign in<br>2. Use org switcher to create new org<br>3. Complete onboarding</td><td>Second org created, data isolated</td><td></td><td></td></tr>
+<tr><td>1.5.2</td><td>Org A data not visible in Org B</td><td>1. Switch to Org A, create a lead<br>2. Switch to Org B</td><td>Lead from Org A not visible in Org B</td><td></td><td></td></tr>
+<tr><td>1.5.3</td><td>Org A KB articles not visible in Org B</td><td>1. Add KB in Org A<br>2. Switch to Org B</td><td>No KB articles from Org A shown</td><td></td><td></td></tr>
+<tr><td>1.5.4</td><td>Org A conversations not visible in Org B</td><td>1. Chat in Org A<br>2. Switch to Org B</td><td>Conversations from Org A not shown</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="page-break"></div>
+<h2>Section 2: Onboarding Wizard</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>2.1</td><td>Step 1: Welcome greeting shown</td><td>1. After sign up, land on onboarding</td><td>Greeting step with welcome message</td><td></td><td></td></tr>
+<tr><td>2.2</td><td>Step 2: Institute info form</td><td>1. Enter name, slug, phone, email, address<br>2. Click Next</td><td>Data saved, advances to step 3</td><td></td><td></td></tr>
+<tr><td>2.3</td><td>Step 2: Slug validation</td><td>1. Enter slug with spaces/special chars</td><td>Auto-sanitized (lowercase, hyphens)</td><td></td><td></td></tr>
+<tr><td>2.4</td><td>Step 2: Empty name error</td><td>1. Leave name empty<br>2. Click Next</td><td>Validation error, cannot proceed</td><td></td><td></td></tr>
+<tr><td>2.5</td><td>Step 3: Add courses</td><td>1. Add 2+ courses with names + durations</td><td>Courses appear in list</td><td></td><td></td></tr>
+<tr><td>2.6</td><td>Step 3: Remove course</td><td>1. Click remove on a course</td><td>Course removed from list</td><td></td><td></td></tr>
+<tr><td>2.7</td><td>Step 4: Set fees per course</td><td>1. Enter fee amounts for each course</td><td>Fees saved to courses</td><td></td><td></td></tr>
+<tr><td>2.8</td><td>Step 5: Set working hours</td><td>1. Set opening/closing time<br>2. Select working days</td><td>Hours saved</td><td></td><td></td></tr>
+<tr><td>2.9</td><td>Step 6: Admission info</td><td>1. Enter admission process + document requirements</td><td>Info saved</td><td></td><td></td></tr>
+<tr><td>2.10</td><td>Complete onboarding</td><td>1. Click "Complete" on last step</td><td>Redirected to /dashboard</td><td></td><td></td></tr>
+<tr><td>2.11</td><td>Back button persists data</td><td>1. Fill step 3, click Back, go Next again</td><td>Previously entered data still there</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 3: Dashboard Home</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>3.1</td><td>Dashboard loads successfully</td><td>1. Go to /dashboard</td><td>Page loads with stats cards</td><td></td><td></td></tr>
+<tr><td>3.2</td><td>Stats cards display correct counts</td><td>1. View Total Leads, Active Conversations, Upcoming Appointments, New Messages</td><td>Numbers match actual data</td><td></td><td></td></tr>
+<tr><td>3.3</td><td>Recent leads section shows latest</td><td>1. Check Recent Leads list</td><td>Shows most recent 5 leads</td><td></td><td></td></tr>
+<tr><td>3.4</td><td>Recent conversations section</td><td>1. Check Recent Conversations list</td><td>Shows most recent conversations</td><td></td><td></td></tr>
+<tr><td>3.5</td><td>Quick action buttons work</td><td>1. Click "New Lead", "New Chat", etc.</td><td>Navigates to correct page</td><td></td><td></td></tr>
+<tr><td>3.6</td><td>Dashboard with zero data</td><td>1. Fresh org with no leads/conversations</td><td>Shows empty state / "No data yet"</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="page-break"></div>
+<h2>Section 4: AI Receptionist (Dashboard Chat)</h2>
+<!-- ============================================================ -->
+
+<div class="critical">
+<strong>CRITICAL FEATURE:</strong> This is the core AI chat. Test thoroughly.
+</div>
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>4.1</td><td>New conversation starts</td><td>1. Go to Counselor<br>2. Type message and send</td><td>Message appears, AI responds</td><td></td><td></td></tr>
+<tr><td>4.2</td><td>AI response streams</td><td>1. Send a message</td><td>AI response appears word-by-word (streaming)</td><td></td><td></td></tr>
+<tr><td>4.3</td><td>RAG context from Knowledge Base</td><td>1. Create KB article about fees<br>2. Ask "How much do courses cost?"</td><td>AI mentions amounts from KB article</td><td></td><td></td></tr>
+<tr><td>4.4</td><td>RAG context from FAQs</td><td>1. Create FAQ about address<br>2. Ask "What is your address?"</td><td>AI responds with FAQ answer</td><td></td><td></td></tr>
+<tr><td>4.5</td><td>Hinglish language support</td><td>1. Ask: "Mujhe course fees ke baare mein batao"</td><td>AI responds in Hinglish</td><td></td><td></td></tr>
+<tr><td>4.6</td><td>Multiple back-and-forth messages</td><td>1. Send 5+ messages in one conversation</td><td>All messages appear, conversation history maintained</td><td></td><td></td></tr>
+<tr><td>4.7</td><td>Auto lead capture (name)</td><td>1. Say "My name is Amit"</td><td>Lead panel shows name, lead created</td><td></td><td></td></tr>
+<tr><td>4.8</td><td>Auto lead capture (phone)</td><td>1. Say "My number is 9876543210"</td><td>Lead panel shows phone number</td><td></td><td></td></tr>
+<tr><td>4.9</td><td>Auto lead capture (name + phone)</td><td>1. Say "I am Priya, call me at 8765432109"</td><td>Both name and phone captured</td><td></td><td></td></tr>
+<tr><td>4.10</td><td>Lead panel updates in real-time</td><td>1. Say name in chat</td><td>Lead panel appears/updates without page refresh</td><td></td><td></td></tr>
+<tr><td>4.11</td><td>Conversation list updates</td><td>1. Start new conversation</td><td>New conversation appears in left panel</td><td></td><td></td></tr>
+<tr><td>4.12</td><td>Switch between conversations</td><td>1. Click different conversation in list</td><td>Chat history loads for that conversation</td><td></td><td></td></tr>
+<tr><td>4.13</td><td>Send empty message</td><td>1. Click send with empty input</td><td>Message not sent, no error</td><td></td><td></td></tr>
+<tr><td>4.14</td><td>Very long message</td><td>1. Paste a 2000+ character message</td><td>Message sent, AI responds</td><td></td><td></td></tr>
+<tr><td>4.15</td><td>Special characters</td><td>1. Send message with HTML tags, symbols</td><td>Displayed properly, no injection</td><td></td><td></td></tr>
+<tr><td>4.16</td><td>Cancel mid-response</td><td>1. Send message, click stop/cancel while AI is streaming</td><td>AI stops responding mid-stream</td><td></td><td></td></tr>
+<tr><td>4.17</td><td>No KB/FAQ data (empty org)</td><td>1. Delete all KB + FAQs<br>2. Ask any question</td><td>AI still responds (general knowledge), no RAG context</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 5: Chat Widget (Embedded)</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>5.1</td><td>Widget loads on widget-test page</td><td>1. Go to /widget-test</td><td>Chat bubble appears bottom-right</td><td></td><td></td></tr>
+<tr><td>5.2</td><td>Open widget</td><td>1. Click chat bubble</td><td>Widget opens, shows greeting message</td><td></td><td></td></tr>
+<tr><td>5.3</td><td>Send message via widget</td><td>1. Type message<br>2. Send</td><td>Message appears, AI responds</td><td></td><td></td></tr>
+<tr><td>5.4</td><td>Widget branding matches settings</td><td>1. In Settings → Widget, set primary color + name<br>2. Refresh widget-test page</td><td>Widget reflects custom color + name</td><td></td><td></td></tr>
+<tr><td>5.5</td><td>Widget works with Shadow DOM isolation</td><td>1. Inspect widget in DevTools</td><td>Widget renders in Shadow DOM, page CSS unaffected</td><td></td><td></td></tr>
+<tr><td>5.6</td><td>Conversation persists on page refresh</td><td>1. Send messages in widget<br>2. Refresh page<br>3. Open widget</td><td>Previous messages visible</td><td></td><td></td></tr>
+<tr><td>5.7</td><td>Widget on external domain (if possible)</td><td>1. Create HTML file with embed script<br>2. Open in browser</td><td>Widget loads, chat works</td><td></td><td></td></tr>
+<tr><td>5.8</td><td>Multiple widget instances</td><td>1. Open app in 2 tabs with widget</td><td>Each tab has independent conversation</td><td></td><td></td></tr>
+<tr><td>5.9</td><td>Mobile responsive widget</td><td>1. Open widget-test on phone-width viewport</td><td>Widget fits screen properly</td><td></td><td></td></tr>
+<tr><td>5.10</td><td>Widget close/reopen</td><td>1. Open widget → close → reopen</td><td>Conversation history preserved</td><td></td><td></td></tr>
+<tr><td>5.11</td><td>Widget offline message</td><td>1. Disconnect internet<br>2. Send message</td><td>Appropriate error shown (if handled)</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="page-break"></div>
+<h2>Section 6: Inbox / Conversations</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>6.1</td><td>All conversations listed</td><td>1. Go to Inbox</td><td>Shows all conversations (dashboard + widget)</td><td></td><td></td></tr>
+<tr><td>6.2</td><td>Conversation detail loads</td><td>1. Click on a conversation</td><td>Full message history shown</td><td></td><td></td></tr>
+<tr><td>6.3</td><td>Reply to conversation</td><td>1. Type reply in inbox<br>2. Send</td><td>Message sent, appears in conversation</td><td></td><td></td></tr>
+<tr><td>6.4</td><td>Channel indicator visible</td><td>1. View conversation list</td><td>WEBSITE / WHATSAPP badges shown</td><td></td><td></td></tr>
+<tr><td>6.5</td><td>Conversation status indicator</td><td>1. View conversation</td><td>Status (active/lead_captured/closed) shown</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 7: Lead Management</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>7.1</td><td>Leads table loads</td><td>1. Go to Leads</td><td>Table with all leads, sortable columns</td><td></td><td></td></tr>
+<tr><td>7.2</td><td>Create lead manually</td><td>1. Click "Create Lead"<br>2. Fill form<br>3. Save</td><td>New lead appears in table</td><td></td><td></td></tr>
+<tr><td>7.3</td><td>Create lead with required fields only</td><td>1. Enter only name<br>2. Save</td><td>Lead created with empty optional fields</td><td></td><td></td></tr>
+<tr><td>7.4</td><td>Create lead with all fields</td><td>1. Fill name, phone, email, course, source, status</td><td>All fields saved</td><td></td><td></td></tr>
+<tr><td>7.5</td><td>Lead scoring - phone provided</td><td>1. Create lead with phone</td><td>Score includes +20 for phone</td><td></td><td></td></tr>
+<tr><td>7.6</td><td>Lead scoring - email provided</td><td>1. Create lead with email</td><td>Score includes +10 for email</td><td></td><td></td></tr>
+<tr><td>7.7</td><td>Lead category calculation</td><td>1. Create lead with high score</td><td>Category shows VIP/Hot/Warm/Cold correctly</td><td></td><td></td></tr>
+<tr><td>7.8</td><td>Search leads by name</td><td>1. Type in search bar</td><td>Table filters to matching names</td><td></td><td></td></tr>
+<tr><td>7.9</td><td>Filter leads by status</td><td>1. Select status filter</td><td>Only leads with that status shown</td><td></td><td></td></tr>
+<tr><td>7.10</td><td>Filter leads by category</td><td>1. Select Hot/Warm/Cold filter</td><td>Filtered results shown</td><td></td><td></td></tr>
+<tr><td>7.11</td><td>Filter leads by source</td><td>1. Select source filter (Chat, Website, etc.)</td><td>Filtered results shown</td><td></td><td></td></tr>
+<tr><td>7.12</td><td>Lead detail sheet opens</td><td>1. Click lead row</td><td>Side panel with full details</td><td></td><td></td></tr>
+<tr><td>7.13</td><td>Lead activity timeline</td><td>1. In lead detail, scroll to activities</td><td>Shows all activities with timestamps</td><td></td><td></td></tr>
+<tr><td>7.14</td><td>Add note to lead</td><td>1. In lead detail, add a note</td><td>Note appears in timeline</td><td></td><td></td></tr>
+<tr><td>7.15</td><td>Change lead status</td><td>1. Click status dropdown<br>2. Select new status</td><td>Status updates, activity logged</td><td></td><td></td></tr>
+<tr><td>7.16</td><td>Lead status badge colors</td><td>1. Change status to different values</td><td>Each status has distinct color</td><td></td><td></td></tr>
+<tr><td>7.17</td><td>Category badge colors</td><td>1. View leads with different categories</td><td>Cold=gray, Warm=blue, Hot=orange, VIP=gold</td><td></td><td></td></tr>
+<tr><td>7.18</td><td>Export leads</td><td>1. Click Export</td><td>CSV file downloaded with lead data</td><td></td><td></td></tr>
+<tr><td>7.19</td><td>Sort leads by column</td><td>1. Click column headers</td><td>Table sorts ascending/descending</td><td></td><td></td></tr>
+<tr><td>7.20</td><td>Empty leads state</td><td>1. Delete all leads</td><td>"No leads yet" message shown</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 8: Lead Funnel / Pipeline</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>8.1</td><td>Funnel visual loads</td><td>1. Go to Funnel</td><td>Pipeline stages shown with lead counts</td><td></td><td></td></tr>
+<tr><td>8.2</td><td>Drag lead between stages</td><td>1. Drag a lead card to new stage</td><td>Lead status updated, count recalculated</td><td></td><td></td></tr>
+<tr><td>8.3</td><td>Stage counts match actual data</td><td>1. Compare funnel counts with lead table</td><td>Numbers match</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="page-break"></div>
+<h2>Section 9: Appointments</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>9.1</td><td>Appointments page loads</td><td>1. Go to Appointments</td><td>Calendar/table view with appointments</td><td></td><td></td></tr>
+<tr><td>9.2</td><td>Book new appointment</td><td>1. Click "Book Appointment"<br>2. Fill details, select date/time<br>3. Save</td><td>Appointment created and shown</td><td></td><td></td></tr>
+<tr><td>9.3</td><td>Book appointment with existing lead</td><td>1. Link to lead during booking</td><td>Lead linked, shows in lead detail</td><td></td><td></td></tr>
+<tr><td>9.4</td><td>Book appointment without lead</td><td>1. Enter only name + phone</td><td>Appointment created as walk-in</td><td></td><td></td></tr>
+<tr><td>9.5</td><td>Time slot picker works</td><td>1. Select date<br>2. View available slots</td><td>Only available (non-overlapping) slots shown</td><td></td><td></td></tr>
+<tr><td>9.6</td><td>Reschedule appointment</td><td>1. Click Reschedule<br>2. Select new date/time</td><td>Appointment updated, history logged</td><td></td><td></td></tr>
+<tr><td>9.7</td><td>Cancel appointment</td><td>1. Click Cancel</td><td>Status changed to cancelled, shows timestamp</td><td></td><td></td></tr>
+<tr><td>9.8</td><td>Confirm appointment</td><td>1. Change status to confirmed</td><td>Status badge updates</td><td></td><td></td></tr>
+<tr><td>9.9</td><td>Appointment status badges</td><td>1. View different statuses</td><td>Each has distinct color</td><td></td><td></td></tr>
+<tr><td>9.10</td><td>Past appointments shown differently</td><td>1. View past vs future dates</td><td>Past dates visually distinct</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 10: AI Copilot</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>10.1</td><td>Copilot loads</td><td>1. Go to Copilot</td><td>Chat interface loads</td><td></td><td></td></tr>
+<tr><td>10.2</td><td>Lead summary query</td><td>1. Ask "Give me lead summary"</td><td>AI responds with lead stats</td><td></td><td></td></tr>
+<tr><td>10.3</td><td>Draft follow-up message</td><td>1. Ask "Draft a follow-up for Rahul"</td><td>AI drafts appropriate message</td><td></td><td></td></tr>
+<tr><td>10.4</td><td>Org-specific context</td><td>1. Ask "How many leads do I have?"</td><td>AI uses actual org data to answer</td><td></td><td></td></tr>
+<tr><td>10.5</td><td>Streaming response</td><td>1. Send any query</td><td>Response streams word-by-word</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 11: Knowledge Base (CRUD)</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>11.1</td><td>List KB articles</td><td>1. Go to Knowledge Base</td><td>List of articles with search</td><td></td><td></td></tr>
+<tr><td>11.2</td><td>Create KB article</td><td>1. Click New<br>2. Fill title, content, category<br>3. Save</td><td>Article appears in list</td><td></td><td></td></tr>
+<tr><td>11.3</td><td>Edit KB article</td><td>1. Click article<br>2. Edit content<br>3. Save</td><td>Changes persisted</td><td></td><td></td></tr>
+<tr><td>11.4</td><td>Delete KB article</td><td>1. Click delete on article</td><td>Article removed, embedding may become stale</td><td></td><td></td></tr>
+<tr><td>11.5</td><td>Search KB articles</td><td>1. Type in search bar</td><td>Filters articles by title/content</td><td></td><td></td></tr>
+<tr><td>11.6</td><td>Empty category field</td><td>1. Create article without category</td><td>Article saved (category may default)</td><td></td><td></td></tr>
+<tr><td>11.7</td><td>Article with 5000+ characters</td><td>1. Paste long content</td><td>Saved, AI can reference it</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="page-break"></div>
+<h2>Section 12: FAQs (CRUD)</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>12.1</td><td>List FAQs</td><td>1. Go to FAQs</td><td>FAQ list with search</td><td></td><td></td></tr>
+<tr><td>12.2</td><td>Create FAQ</td><td>1. Click New<br>2. Fill question, answer, category<br>3. Save</td><td>FAQ appears in list</td><td></td><td></td></tr>
+<tr><td>12.3</td><td>Edit FAQ</td><td>1. Click FAQ<br>2. Edit<br>3. Save</td><td>Changes persisted</td><td></td><td></td></tr>
+<tr><td>12.4</td><td>Delete FAQ</td><td>1. Click delete</td><td>FAQ removed</td><td></td><td></td></tr>
+<tr><td>12.5</td><td>Search FAQs</td><td>1. Type in search bar</td><td>Filters FAQs</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 13: Campaign Landing Pages</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>13.1</td><td>Create campaign</td><td>1. Go to Campaigns<br>2. Click "New Campaign"<br>3. Fill name, slug, headline<br>4. Save</td><td>Campaign card appears in grid</td><td></td><td></td></tr>
+<tr><td>13.2</td><td>Duplicate slug error</td><td>1. Create campaign with existing slug</td><td>Error: slug already exists</td><td></td><td></td></tr>
+<tr><td>13.3</td><td>Landing page renders</td><td>1. Click Preview on campaign</td><td>Landing page at /landing/{slug} loads</td><td></td><td></td></tr>
+<tr><td>13.4</td><td>Landing page branding</td><td>1. Check headline, CTA text, button color</td><td>Matches campaign settings</td><td></td><td></td></tr>
+<tr><td>13.5</td><td>Form submission (all fields)</td><td>1. Fill name, phone, email, course<br>2. Submit</td><td>"Thank You" shown, lead created in dashboard</td><td></td><td></td></tr>
+<tr><td>13.6</td><td>Form submission (minimal)</td><td>1. Enter only name<br>2. Submit</td><td>Accepted, other fields null</td><td></td><td></td></tr>
+<tr><td>13.7</td><td>Empty name validation</td><td>1. Submit with empty name</td><td>Validation error, not submitted</td><td></td><td></td></tr>
+<tr><td>13.8</td><td>View count increments</td><td>1. Load landing page multiple times</td><td>View count increases in campaign card</td><td></td><td></td></tr>
+<tr><td>13.9</td><td>Submission count increments</td><td>1. Submit form multiple times</td><td>Submission count increases</td><td></td><td></td></tr>
+<tr><td>13.10</td><td>Inactive campaign shows 404</td><td>1. Set campaign inactive<br>2. Visit landing page</td><td>404 page shown</td><td></td><td></td></tr>
+<tr><td>13.11</td><td>Copy link button</td><td>1. Click copy icon on campaign card</td><td>URL copied to clipboard</td><td></td><td></td></tr>
+<tr><td>13.12</td><td>Delete campaign</td><td>1. Click delete on campaign</td><td>Campaign removed (submissions may orphan)</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 14: Follow-ups (Automation)</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>14.1</td><td>Create follow-up rule</td><td>1. Go to Follow-ups<br>2. Click New Rule<br>3. Fill trigger, delay, message, channel<br>4. Save</td><td>Rule appears in list</td><td></td><td></td></tr>
+<tr><td>14.2</td><td>Enable/disable rule</td><td>1. Toggle rule enabled/disabled</td><td>Respected when cron runs</td><td></td><td></td></tr>
+<tr><td>14.3</td><td>Delete rule</td><td>1. Click delete on rule</td><td>Rule removed</td><td></td><td></td></tr>
+<tr><td>14.4</td><td>Follow-up logs shown</td><td>1. View logs section</td><td>Shows scheduled/sent/failed logs</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="page-break"></div>
+<h2>Section 15: Analytics</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>15.1</td><td>Analytics page loads</td><td>1. Go to Analytics</td><td>Charts and stats visible</td><td></td><td></td></tr>
+<tr><td>15.2</td><td>Lead funnel chart</td><td>1. Check funnel visualization</td><td>Shows lead counts per stage</td><td></td><td></td></tr>
+<tr><td>15.3</td><td>Lead source breakdown</td><td>1. Check source pie/bar chart</td><td>Shows leads by source</td><td></td><td></td></tr>
+<tr><td>15.4</td><td>Conversation stats</td><td>1. Check conversation metrics</td><td>Total conversations, active, etc.</td><td></td><td></td></tr>
+<tr><td>15.5</td><td>Stats cards load</td><td>1. View top stat cards</td><td>Numbers match actual data</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 16: Settings</h2>
+
+<h3>16.1 General Settings</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>16.1.1</td><td>View general settings</td><td>1. Go to Settings → General</td><td>Shows institute info, pre-filled</td><td></td><td></td></tr>
+<tr><td>16.1.2</td><td>Update institute name</td><td>1. Edit name<br>2. Save</td><td>Name updated, reflected in app</td><td></td><td></td></tr>
+<tr><td>16.1.3</td><td>Update working hours</td><td>1. Change opening/closing time<br>2. Save</td><td>Hours updated</td><td></td><td></td></tr>
+<tr><td>16.1.4</td><td>Update greeting message</td><td>1. Change greeting<br>2. Save</td><td>Widget greeting updated</td><td></td><td></td></tr>
+</table>
+
+<h3>16.2 Widget Settings</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>16.2.1</td><td>View widget settings</td><td>1. Go to Settings → Widget</td><td>Shows color picker, name, greeting, dark mode</td><td></td><td></td></tr>
+<tr><td>16.2.2</td><td>Change primary color</td><td>1. Pick new color<br>2. Save</td><td>Widget reflects new color</td><td></td><td></td></tr>
+<tr><td>16.2.3</td><td>Toggle dark mode</td><td>1. Enable dark mode<br>2. Save</td><td>Widget shows dark theme</td><td></td><td></td></tr>
+<tr><td>16.2.4</td><td>Change widget name</td><td>1. Change widget display name<br>2. Save</td><td>Widget shows new name</td><td></td><td></td></tr>
+<tr><td>16.2.5</td><td>Embed code generated</td><td>1. Check embed snippet</td><td>Shows &lt;script&gt; tag with org slug</td><td></td><td></td></tr>
+</table>
+
+<h3>16.3 Appointment Settings</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>16.3.1</td><td>Change appointment duration</td><td>1. Edit duration (e.g. 30 min)<br>2. Save</td><td>Slot picker shows correct intervals</td><td></td><td></td></tr>
+<tr><td>16.3.2</td><td>Change max bookings per slot</td><td>1. Edit max bookings<br>2. Save</td><td>Multiple bookings allowed per slot</td><td></td><td></td></tr>
+</table>
+
+<h3>16.4 Members / Team</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>16.4.1</td><td>View members</td><td>1. Go to Settings → Members</td><td>Shows current user + other members</td><td></td><td></td></tr>
+<tr><td>16.4.2</td><td>Invite member</td><td>1. Enter email, select role<br>2. Send invite</td><td>Invitation sent (if implemented)</td><td></td><td></td></tr>
+<tr><td>16.4.3</td><td>Remove member</td><td>1. Click remove on a member</td><td>Member removed from org</td><td></td><td></td></tr>
+<tr><td>16.4.4</td><td>Owner cannot demote self</td><td>1. As OWNER, try to change own role</td><td>Should be blocked or warned</td><td></td><td></td></tr>
+</table>
+
+<h3>16.5 Billing</h3>
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>16.5.1</td><td>View billing page</td><td>1. Go to Settings → Billing</td><td>Shows current plan (Free)</td><td></td><td></td></tr>
+<tr><td>16.5.2</td><td>Plan details shown</td><td>1. View plan info</td><td>Features, limits, price shown</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="page-break"></div>
+<h2>Section 17: Courses &amp; Fees</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>17.1</td><td>Courses created during onboarding persist</td><td>1. Check onboarding step 3 created courses</td><td>Courses visible somewhere in settings</td><td></td><td></td></tr>
+<tr><td>17.2</td><td>Fees set during onboarding persist</td><td>1. Check fees for each course</td><td>Fees match what was entered</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 18: Super Admin</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>18.1</td><td>Super admin access</td><td>1. Set SUPER_ADMIN_EMAILS in .env<br>2. Sign in with that email<br>3. Check admin panel</td><td>Admin features accessible</td><td></td><td></td></tr>
+<tr><td>18.2</td><td>Non-admin cannot access admin</td><td>1. Sign in as regular user<br>2. Go to /dashboard/admin</td><td>Redirected or 403</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 19: WhatsApp Integration</h2>
+<!-- ============================================================ -->
+
+<div class="info">
+Requires Meta Business Account setup. Skip if not configured.
+</div>
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>19.1</td><td>WhatsApp webhook verification</td><td>1. Meta sends verification request</td><td>Webhook verifies and returns challenge</td><td></td><td></td></tr>
+<tr><td>19.2</td><td>Incoming WhatsApp message</td><td>1. Send message to WhatsApp number</td><td>Message appears in Inbox, AI responds</td><td></td><td></td></tr>
+<tr><td>19.3</td><td>Outgoing WhatsApp reply</td><td>1. Reply from Inbox</td><td>Message sent via WhatsApp API</td><td></td><td></td></tr>
+<tr><td>19.4</td><td>WhatsApp webhook security</td><td>1. Request without valid signature</td><td>Rejected with 401</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 20: Email Notifications</h2>
+<!-- ============================================================ -->
+
+<div class="info">
+Requires Resend API key. Skip if not configured.
+</div>
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>20.1</td><td>New lead email notification</td><td>1. Lead created via chat or campaign</td><td>Email sent to institute (if configured)</td><td></td><td></td></tr>
+<tr><td>20.2</td><td>Appointment confirmation email</td><td>1. Book appointment</td><td>Confirmation email sent</td><td></td><td></td></tr>
+<tr><td>20.3</td><td>Email fallback (no API key)</td><td>1. Remove RESEND_API_KEY<br>2. Trigger notification</td><td>Logs to console instead of crashing</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 21: Embeddings &amp; AI Search</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>21.1</td><td>Embedding created on KB/FAQ save</td><td>1. Save a KB article<br>2. Check Embedding table in DB</td><td>Embedding record exists</td><td></td><td></td></tr>
+<tr><td>21.2</td><td>Semantic search returns relevant results</td><td>1. Ask AI a question matching KB content</td><td>AI uses relevant KB content for answer</td><td></td><td></td></tr>
+<tr><td>21.3</td><td>pgvector search works</td><td>1. Ensure pgvector extension is enabled</td><td>Vector similarity search works</td><td></td><td></td></tr>
+<tr><td>21.4</td><td>In-memory fallback works</td><td>1. Disable pgvector<br>2. Search</td><td>Uses cosine similarity fallback</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="page-break"></div>
+<h2>Section 22: Error Pages &amp; Edge Cases</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>22.1</td><td>404 page</td><td>1. Go to /nonexistent-page</td><td>404 page shown (not blank)</td><td></td><td></td></tr>
+<tr><td>22.2</td><td>500 error page</td><td>1. Trigger server error (if possible)</td><td>500 error page shown</td><td></td><td></td></tr>
+<tr><td>22.3</td><td>Network offline</td><td>1. Go offline<br>2. Interact with app</td><td>Graceful error (no white screen)</td><td></td><td></td></tr>
+<tr><td>22.4</td><td>Browser back/forward</td><td>1. Navigate multiple pages<br>2. Use browser back/forward</td><td>Navigation works correctly</td><td></td><td></td></tr>
+<tr><td>22.5</td><td>Direct URL paste</td><td>1. Paste /dashboard/leads in URL bar</td><td>Page loads correctly</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 23: Responsive Design</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>23.1</td><td>Desktop (1920x1080)</td><td>1. View all pages at full width</td><td>Layout uses full width, no horizontal scroll</td><td></td><td></td></tr>
+<tr><td>23.2</td><td>Laptop (1366x768)</td><td>1. View all pages</td><td>Sidebar visible, content fits</td><td></td><td></td></tr>
+<tr><td>23.3</td><td>Tablet (768px)</td><td>1. View dashboard</td><td>Sidebar collapses, hamburger menu</td><td></td><td></td></tr>
+<tr><td>23.4</td><td>Mobile (375px)</td><td>1. View all key pages</td><td>Mobile layout, readable text, touch-friendly</td><td></td><td></td></tr>
+<tr><td>23.5</td><td>Sidebar toggle on mobile</td><td>1. On mobile, toggle sidebar</td><td>Overlay/off-canvas sidebar works</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 24: Performance &amp; Load</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>24.1</td><td>Homepage load time</td><td>1. Check DevTools Network tab</td><td>Loads in &lt; 3s</td><td></td><td></td></tr>
+<tr><td>24.2</td><td>Dashboard load time</td><td>1. Check DevTools Network tab</td><td>Loads in &lt; 3s</td><td></td><td></td></tr>
+<tr><td>24.3</td><td>Chat response time</td><td>1. Send message, measure response</td><td>First token in &lt; 5s</td><td></td><td></td></tr>
+<tr><td>24.4</td><td>Leads page with 50+ leads</td><td>1. Create 50+ leads<br>2. Visit Leads page</td><td>Loads in &lt; 3s</td><td></td><td></td></tr>
+<tr><td>24.5</td><td>Memory usage</td><td>1. Chat for 10+ messages<br>2. Check browser memory</td><td>No excessive memory growth</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>Section 25: Security Tests</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th style="width:40px">#</th><th>Test Case</th><th style="width:90px">Steps</th><th style="width:80px">Expected</th><th style="width:70px">Result</th><th>Notes</th></tr>
+<tr><td>25.1</td><td>CORS on widget API</td><td>1. Call /api/widget/chat from different origin</td><td>CORS headers present</td><td></td><td></td></tr>
+<tr><td>25.2</td><td>API auth required</td><td>1. Call /api/leads without auth header</td><td>401 response</td><td></td><td></td></tr>
+<tr><td>25.3</td><td>Rate limiting on public APIs</td><td>1. Send rapid requests to widget chat</td><td>429 (Too Many Requests) after threshold</td><td></td><td></td></tr>
+<tr><td>25.4</td><td>SQL injection</td><td>1. Send "'; DROP TABLE;" in chat</td><td>Sanitized, no injection</td><td></td><td></td></tr>
+<tr><td>25.5</td><td>XSS in chat</td><td>1. Send "&lt;script&gt;alert('xss')&lt;/script&gt;" in chat</td><td>Displayed as text, not executed</td><td></td><td></td></tr>
+<tr><td>25.6</td><td>Data isolation between orgs</td><td>1. Try to access Org B's lead IDs from Org A</td><td>Forbidden or empty result</td><td></td><td></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<div class="page-break"></div>
+<h2>32-Point Summary Sheet</h2>
+<!-- ============================================================ -->
+
+<table>
+<tr><th>#</th><th>Section</th><th>Total Tests</th><th>Pass</th><th>Fail</th><th>Skip</th><th>Pass %</th><th>Sign-off</th></tr>
+<tr><td>1</td><td>Authentication &amp; Access Control</td><td>18</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2</td><td>Onboarding Wizard</td><td>11</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>3</td><td>Dashboard Home</td><td>6</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>4</td><td>AI Receptionist (Chat)</td><td>17</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>5</td><td>Chat Widget</td><td>11</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>6</td><td>Inbox / Conversations</td><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>7</td><td>Lead Management</td><td>20</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>8</td><td>Lead Funnel</td><td>3</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>9</td><td>Appointments</td><td>10</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>10</td><td>AI Copilot</td><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>11</td><td>Knowledge Base</td><td>7</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>12</td><td>FAQs</td><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>13</td><td>Campaign Landing Pages</td><td>12</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>14</td><td>Follow-ups (Automation)</td><td>4</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>15</td><td>Analytics</td><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>16</td><td>Settings (all tabs)</td><td>15</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>17</td><td>Courses &amp; Fees</td><td>2</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>18</td><td>Super Admin</td><td>2</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>19</td><td>WhatsApp Integration</td><td>4</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>20</td><td>Email Notifications</td><td>3</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>21</td><td>Embeddings &amp; AI Search</td><td>4</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>22</td><td>Error Pages &amp; Edge Cases</td><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>23</td><td>Responsive Design</td><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>24</td><td>Performance &amp; Load</td><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>25</td><td>Security Tests</td><td>6</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td colspan="2"><strong>TOTAL</strong></td><td><strong>190</strong></td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+<div class="critical">
+<strong>PASS THRESHOLD:</strong> All critical-path tests (4, 7, 9, 13, 1) must pass at 100%. Overall pass rate must be &ge; 90% for beta launch.
+</div>
+
+<h3>Critical Bugs Found</h3>
+<table>
+<tr><th>#</th><th>Section</th><th>Description</th><th>Severity</th><th>Status</th></tr>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+<h3>Release Decision</h3>
+<table>
+<tr><th>Criteria</th><th>Requirement</th><th>Status</th></tr>
+<tr><td>All critical bugs fixed</td><td>No open HIGH severity bugs</td><td></td></tr>
+<tr><td>Overall pass rate</td><td>&ge; 90%</td><td></td></tr>
+<tr><td>Core features pass</td><td>AI Chat, Leads, Appointments, Campaigns at 100%</td><td></td></tr>
+<tr><td>Auth flow passes</td><td>Sign up, sign in, route protection at 100%</td><td></td></tr>
+<tr><td>Tester sign-off</td><td>All testers confirm</td><td></td></tr>
+<tr><td colspan="3"><strong>READY FOR BETA LAUNCH? ___________ (Yes/No)</strong></td></tr>
+</table>
+
+<div class="meta">
+<strong>Document generated:</strong> June 2026 &nbsp;|&nbsp; <strong>Project:</strong> AI Admission Counselor &nbsp;|&nbsp; <strong>File:</strong> To save as Word: File → Save As → .docx (Word supports opening HTML files)
+</div>
+
+</body>
+</html>

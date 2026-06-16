@@ -12,6 +12,7 @@ interface CreateLeadDialogProps {
 export function CreateLeadDialog({ onLeadCreated }: CreateLeadDialogProps) {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -25,6 +26,7 @@ export function CreateLeadDialog({ onLeadCreated }: CreateLeadDialogProps) {
     e.preventDefault();
     if (!form.name.trim() || submitting) return;
     setSubmitting(true);
+    setError("");
     try {
       const res = await fetch("/api/leads", {
         method: "POST",
@@ -35,7 +37,12 @@ export function CreateLeadDialog({ onLeadCreated }: CreateLeadDialogProps) {
         setOpen(false);
         setForm({ name: "", phone: "", email: "", interestedCourse: "", source: "direct", status: "new" });
         onLeadCreated();
+      } else {
+        const data = await res.json().catch(() => ({ error: "Something went wrong" }));
+        setError(data.error || "Failed to create lead");
       }
+    } catch {
+      setError("Network error. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -136,6 +143,8 @@ export function CreateLeadDialog({ onLeadCreated }: CreateLeadDialogProps) {
               </select>
             </div>
           </div>
+
+          {error && <p className="text-sm text-destructive">{error}</p>}
 
           <div className="flex justify-end gap-2 pt-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>

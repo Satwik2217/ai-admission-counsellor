@@ -62,6 +62,7 @@ model Organization {
   appointments   Appointment[]
   followUpRules  FollowUpRule[]
   followUpLogs   FollowUpLog[]
+  campaigns      Campaign[]
 }
 
 model User {
@@ -339,4 +340,43 @@ model Message {
   @@index([conversationId])
   @@index([conversationId, channel])
   @@index([conversationId, createdAt])
+}
+
+model Campaign {
+  id             String   @id @default(cuid())
+  organizationId String
+  name           String
+  slug           String
+  headline       String?
+  subtitle       String?
+  ctaText        String   @default("Submit")
+  buttonColor    String   @default("#7C3AED")
+  fields         Json     @default("[\"name\",\"phone\",\"email\",\"course\"]")
+  isActive       Boolean  @default(true)
+  viewCount      Int      @default(0)
+  submissionCount Int     @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  submissions  CampaignSubmission[]
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+}
+
+model CampaignSubmission {
+  id         String   @id @default(cuid())
+  campaignId String
+  name       String
+  phone      String?
+  email      String?
+  course     String?
+  leadId     String?
+  createdAt  DateTime @default(now())
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId])
+  @@index([campaignId, createdAt])
 }

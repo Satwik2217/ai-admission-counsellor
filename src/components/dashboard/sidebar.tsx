@@ -21,6 +21,7 @@ import {
   MessageSquare,
   Clock,
   TrendingUp,
+  Globe,
 } from "lucide-react";
 
 const navigation = [
@@ -30,6 +31,7 @@ const navigation = [
   { name: "Funnel", href: "/dashboard/funnel", icon: TrendingUp },
   { name: "Appointments", href: "/dashboard/appointments", icon: CalendarDays },
   { name: "Follow-ups", href: "/dashboard/follow-ups", icon: Clock },
+  { name: "Campaigns", href: "/dashboard/campaigns", icon: Globe },
   { name: "Students", href: "/dashboard/students", icon: GraduationCap },
   { name: "Applications", href: "/dashboard/applications", icon: FileText },
   { name: "AI Copilot", href: "/dashboard/copilot", icon: Bot },

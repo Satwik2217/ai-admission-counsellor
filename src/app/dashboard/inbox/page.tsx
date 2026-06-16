@@ -12,7 +12,6 @@ export default async function InboxPage() {
     include: { organization: true },
   });
   if (!membership) redirect("/dashboard/onboarding");
-  if (!membership.organization.onboardingComplete) redirect("/dashboard/onboarding");
 
   const teamMembers = await prisma.membership.findMany({
     where: { organizationId: membership.organizationId },

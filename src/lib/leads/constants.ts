@@ -14,6 +14,7 @@ export const LEAD_SOURCES = [
   { value: "phone_inquiry", label: "Phone Inquiry" },
   { value: "chat", label: "Chat" },
   { value: "whatsapp", label: "WhatsApp" },
+  { value: "campaign", label: "Campaign" },
   { value: "walk_in", label: "Walk-in" },
   { value: "other", label: "Other" },
 ] as const;
