@@ -30,3 +30,12 @@ export interface LeadInfo {
   classField?: string;
   targetExam?: string;
 }
+
+export class RateLimitError extends Error {
+  retryAfter: number;
+  constructor(message: string, retryAfter: number = 30) {
+    super(message);
+    this.name = "RateLimitError";
+    this.retryAfter = retryAfter;
+  }
+}

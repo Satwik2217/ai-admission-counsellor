@@ -88,20 +88,20 @@ export default function FunnelPage() {
         body: JSON.stringify({ status: toStatus }),
       });
       if (res.ok) {
-        const lead = leads[data.fromStatus]?.find((l) => l.id === data.leadId);
-        if (lead) {
-          const updated = { ...lead, status: toStatus };
-          setLeads((prev) => ({
+        setLeads((prev) => {
+          const leadToMove = prev[data.fromStatus]?.find((l) => l.id === data.leadId);
+          if (!leadToMove) return prev;
+          return {
             ...prev,
             [data.fromStatus]: (prev[data.fromStatus] || []).filter((l) => l.id !== data.leadId),
-            [toStatus]: [...(prev[toStatus] || []), updated],
-          }));
-          setStatusCounts((prev) => ({
-            ...prev,
-            [data.fromStatus]: Math.max(0, (prev[data.fromStatus] || 1) - 1),
-            [toStatus]: (prev[toStatus] || 0) + 1,
-          }));
-        }
+            [toStatus]: [...(prev[toStatus] || []), { ...leadToMove, status: toStatus }],
+          };
+        });
+        setStatusCounts((prev) => ({
+          ...prev,
+          [data.fromStatus]: Math.max(0, (prev[data.fromStatus] || 1) - 1),
+          [toStatus]: (prev[toStatus] || 0) + 1,
+        }));
       }
     } catch {
       // ignore

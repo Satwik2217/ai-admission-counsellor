@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import type { AIProvider, AIConfig, ChatParams, LeadInfo } from "./types";
+import { RateLimitError } from "./types";
 
 export class GeminiProvider implements AIProvider {
   name = "gemini";
@@ -50,6 +51,15 @@ export class GeminiProvider implements AIProvider {
           controller.close();
         } catch (error) {
           const errMsg = error instanceof Error ? error.message : "Unknown error";
+          if (errMsg.includes("429") || errMsg.includes("Too Many Requests") || errMsg.includes("quota exceeded") || errMsg.includes("Quota exceeded")) {
+            const retryMatch = errMsg.match(/([\d.]+)\s*s(?:econds?)?/i);
+            const retryAfter = retryMatch ? Math.ceil(parseFloat(retryMatch[1])) : 30;
+            controller.enqueue(
+              `I'm currently experiencing high demand and can't respond right now. Please try again in a moment or contact the institute directly. 🙏`
+            );
+            controller.close();
+            return;
+          }
           controller.enqueue(`\n\nError: ${errMsg}`);
           controller.close();
         }
@@ -126,7 +136,11 @@ Handle Indian names, Hinglish inputs, and various ways people share their detail
         classField: parsed.classField || undefined,
         targetExam: parsed.targetExam || undefined,
       };
-    } catch {
+    } catch (error) {
+      const errMsg = error instanceof Error ? error.message : "";
+      if (errMsg.includes("429") || errMsg.includes("Too Many Requests") || errMsg.includes("quota exceeded")) {
+        console.warn("Gemini rate limit hit during lead extraction, skipping extraction");
+      }
       return {};
     }
   }
