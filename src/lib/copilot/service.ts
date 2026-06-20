@@ -9,7 +9,7 @@ interface CopilotRequest {
 }
 
 interface CopilotResponse {
-  stream: ReadableStream<string>;
+  stream: ReadableStream<Uint8Array>;
 }
 
 export async function processCopilotChat(req: CopilotRequest): Promise<CopilotResponse> {
@@ -63,17 +63,29 @@ export async function processCopilotChat(req: CopilotRequest): Promise<CopilotRe
     language,
   });
 
-  const messages = [
-    { role: "system" as const, content: systemPrompt },
+  const chatMessages = [
     { role: "user" as const, content: message },
   ];
 
   const provider = getAIProvider();
-  const stream = provider.streamChat({
-    messages,
+  const aiStream = provider.streamChat({
+    messages: chatMessages,
     systemPrompt,
     language,
   });
 
-  return { stream };
+  const encoder = new TextEncoder();
+  const responseStream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const reader = aiStream.getReader();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        controller.enqueue(encoder.encode(value));
+      }
+      controller.close();
+    },
+  });
+
+  return { stream: responseStream };
 }

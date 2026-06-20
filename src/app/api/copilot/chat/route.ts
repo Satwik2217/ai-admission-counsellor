@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { processCopilotChat } from "@/lib/copilot/service";
+import { ensureMembership } from "@/lib/ensure-membership";
 
 export async function POST(req: Request) {
   try {
     const { userId } = await auth();
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const membership = await prisma.membership.findFirst({ where: { userId } });
-    if (!membership) return NextResponse.json({ error: "No organization found" }, { status: 404 });
+    const membership = await ensureMembership(userId);
 
     const { message, language } = await req.json();
     if (!message?.trim()) {
